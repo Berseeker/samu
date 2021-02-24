@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\WEB\Auth\VerifyEmailController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +25,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+// URL PARA VERIFICAR EL EMAIL 
+Route::get('/verify-email-custom/{id}/{hash}', [VerifyEmailController::class, 'index'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verify.email.custom');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
