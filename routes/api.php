@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('verify-email',[VerifyEmailController::cl
 
 Route::get('sync-paises-data',[PaisController::class,'syncData']);
 Route::get('paises',[PaisController::class,'index']);
+Route::get('pais/{id}',[PaisController::class,'show']);
 Route::delete('delete-pais',[PaisController::class,'destroy']);
 Route::get('restore-pais',[PaisController::class,'restore']);
 

@@ -27,6 +27,17 @@ class PaisController extends Controller
         ],200);
     }
 
+    public function show($id)
+    {
+        $pais = Pais::findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Mostrando el pais solicitado',
+            'data' => $pais,
+            'code' => 200
+        ],200);
+    }
+
     public function delete($id)
     {
         $pais = Pais::findOrFail($id);
