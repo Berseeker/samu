@@ -76,6 +76,7 @@ class Handler extends ExceptionHandler
             }
             if($exception instanceof QueryException){
                 $codigo = $exception->errorInfo[1];
+                //dd($exception);
                 if($codigo == 1451){
                     return response()->json([
                         'message'=>'error',
@@ -84,6 +85,9 @@ class Handler extends ExceptionHandler
                 }
                 if($codigo == 1045){
                     return response()->json(['message'=>'error','error'=>'Credenciales incorrectas al conectarse a la BD','code'=>409],409);
+                }
+                if($codigo == 1062){
+                    return response()->json(['message'=>'error','error'=>'El email ya se encuentra registrado','code'=>409],409);
                 }
             }
             return response()->json(['message'=>'error','error'=>'Falla inesperada. Intente Luego'.$exception,'code'=>500],500);

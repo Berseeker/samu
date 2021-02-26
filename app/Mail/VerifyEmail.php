@@ -29,7 +29,7 @@ class VerifyEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('Mails.verifyEmail-api')->subject('Verifica tu Email!')->with([
+        return $this->markdown('Mails.verifyEmail')->subject('Verifica tu Email!')->with([
             'url' => $this->url
         ]);
     }

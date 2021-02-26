@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Mail\VerifyEmail;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Team;
 use Mail;
+
 
 class RegisterController extends Controller
 {

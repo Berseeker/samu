@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Divisas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 use App\Models\Divisa;
 
@@ -111,5 +112,14 @@ class DivisaController extends Controller
             'data' => NULL,
             'code' => 200
         ],200);
+    }
+
+    public function syncData()
+    {
+        $data = Http::get('https://restcountries.eu/rest/v2/all');
+
+        $response = $data->json();
+
+        dd($response);
     }
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API\Proveedores;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use App\Mail\VerifyEmail;
 use App\Models\Proveedor;
 use Carbon\Carbon;
@@ -91,11 +93,26 @@ class ProveedorController extends Controller
     public function destroy($id)
     {
         $proveedor = Proveedor::findOrFail($id);
+        $proveedor->tokens()->delete();
         $proveedor->delete();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Se eliminó el proovedor de manera correcta',
+            'data' => NULL,
+            'code' => 200
+        ],200);
+    }
+
+    public function restore($id)
+    {
+        Proveedor::withTrashed()
+            ->where('id', $id)
+            ->restore();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se restauró el proveedor de manera correcta',
             'data' => NULL,
             'code' => 200
         ],200);
@@ -106,7 +123,6 @@ class ProveedorController extends Controller
 function verifyEmail($email_verified_at,$id,$email){
 
     if($email_verified_at == NULL){
-        Auth::loginUsingId($id);
         $url = URL::temporarySignedRoute(
             'verify.email.custom',
             Carbon::now()->addMinutes(60),

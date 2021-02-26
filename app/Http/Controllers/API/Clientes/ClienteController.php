@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API\Clientes;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use App\Mail\VerifyEmail;
 use App\Models\Cliente;
 use Carbon\Carbon;
@@ -90,6 +92,7 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         $cliente = Cliente::findOrFail($id);
+        $cliente->tokens()->delete();
         $cliente->delete();
 
         return response()->json([
@@ -99,12 +102,25 @@ class ClienteController extends Controller
             'code' => 200
         ],200);
     }
+
+    public function restore($id)
+    {
+        Cliente::withTrashed()
+            ->where('id', $id)
+            ->restore();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se restauró el cliente de manera correcta',
+            'data' => NULL,
+            'code' => 200
+        ],200);
+    }
 }
 
 function verifyEmail($email_verified_at,$id,$email){
 
     if($email_verified_at == NULL){
-        Auth::loginUsingId($id);
         $url = URL::temporarySignedRoute(
             'verify.email.custom',
             Carbon::now()->addMinutes(60),
