@@ -31,4 +31,9 @@ class Cliente extends Model
             $query->where('rol_id', 3);
         });
     }
+
+    public function direcciones()
+    {
+        return $this->hasMany(Direccion::class,'user_id');
+    }
 }

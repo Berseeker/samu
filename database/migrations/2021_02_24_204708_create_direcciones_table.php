@@ -19,10 +19,10 @@ class CreateDireccionesTable extends Migration
             $table->bigInteger('celular');
             $table->string('ciudad');
             $table->string('estado');
-            $table->string('colonia');
-            $table->string('calle');
-            $table->longText('referencias');
-            $table->string('codigo_area')->nullable();
+            $table->string('colonia_delegacion')->nullable();
+            $table->string('calle')->nullable();
+            $table->integer('no_ext');
+            $table->longText('referencias')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
