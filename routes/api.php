@@ -11,6 +11,9 @@ use App\Http\Controllers\API\Proveedores\ProveedorController;
 use App\Http\Controllers\API\Divisas\DivisaController;
 use App\Http\Controllers\API\Paises\PaisController;
 use App\Http\Controllers\API\Direcciones\DireccionController;
+use App\Http\Controllers\API\Tiendas\TiendaController;
+use App\Http\Controllers\API\Categorias\CategoriaControler;
+use App\Http\Controllers\API\Subcategorias\SubcategoriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,30 +43,47 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::post('logout',[LoginController::class,'logout']);
 
     Route::get('proveedores',[ProveedorController::class,'index']);
-    Route::get('show-proveedor/{id}',[ProveedorController::class,'show']);
-    Route::post('update-proveedor/{id}',[ProveedorController::class,'update']);
+    Route::get('proveedor/{id}',[ProveedorController::class,'show']);
+    Route::post('proveedor/{id}',[ProveedorController::class,'update']);
     Route::delete('delete-proveedor/{id}',[ProveedorController::class,'destroy']);
     Route::get('restore-proveedor/{id}',[ProveedorController::class,'restore']);
 
     Route::get('clientes',[ClienteController::class,'index']);
-    Route::get('show-cliente/{id}',[ClienteController::class,'show']);
-    Route::post('update-cliente/{id}',[ClienteController::class,'update']);
+    Route::get('cliente/{id}',[ClienteController::class,'show']);
+    Route::post('cliente/{id}',[ClienteController::class,'update']);
     Route::delete('delete-cliente/{id}',[ClienteController::class,'destroy']);
     Route::get('restore-cliente/{id}',[ClienteController::class,'restore']);
 
     Route::get('divisas',[DivisaController::class,'index']);
-    Route::get('show-divisa/{id}',[DivisaController::class,'show']);
-    Route::post('update-divisa/{id}',[DivisaController::class,'update']);
+    Route::get('divisa/{id}',[DivisaController::class,'show']);
+    Route::post('divisa/{id}',[DivisaController::class,'update']);
     Route::post('store-divisa',[DivisaController::class,'store']);
     Route::delete('delete-divisa/{id}',[DivisaController::class,'destroy']);
     Route::get('restore-divisa/{id}',[DivisaController::class,'restore']);
 
     //RUTAS DE DIRECCIONES PARA CLIENTES FINALES
     Route::get('direcciones',[DireccionController::class,'index']);
-    Route::get('show-direccion/{id}',[DireccionController::class,'show']);
+    Route::get('direccion/{id}',[DireccionController::class,'show']);
+    Route::post('direccion/{id}',[DireccionController::class,'update']);
     Route::post('store-direccion',[DireccionController::class,'store']);
-    Route::post('update-direccion',[DireccionController::class,'update']);
     Route::delete('delete-direccion/{id}',[DireccionController::class,'delete']);
+
+    Route::get('tiendas',[TiendaController::class,'index']);
+    Route::get('tienda/{id}',[TiendaController::class,'show']);
+    Route::post('tienda/{id}',[TiendaController::class,'update']);
+    Route::get('store-tienda',[TiendaController::class,'store']);
+
+    Route::get('categorias',[CategoriaControler::class,'index']);
+    Route::get('categoria/{id}',[CategoriaControler::class,'show']);
+    Route::post('categoria/{id}',[CategoriaControler::class,'update']);
+    Route::post('categoria',[CategoriaControler::class,'store']);
+    Route::delete('categoria/{id}',[CategoriaControler::class,'delete']);
+
+    Route::get('subcategorias',[SubcategoriaController::class,'index']);
+    Route::get('subcategoria/{id}',[SubcategoriaController::class,'show']);
+    Route::post('subcategoria/{id}',[SubcategoriaController::class,'update']);
+    Route::post('subcategoria',[SubcategoriaController::class,'store']);
+    Route::delete('subcategoria/{id}',[SubcategoriaController::class,'delete']);
 
 });
 

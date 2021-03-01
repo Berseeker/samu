@@ -13,6 +13,9 @@ use App\Mail\VerifyEmail;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Team;
+use App\Models\Tienda;
+use App\Models\Subcategoria;
+
 use Mail;
 
 
@@ -41,13 +44,16 @@ class RegisterController extends Controller
 
         $this->validate($request,$rules,$messages);
 
+        //queda pendiente de investigar
+        //dd(url()->previous());
+
         $user = new User();
         $user->name = $request->nombre;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->telefono = $request->telefono;
         $user->foto_perfil = $request->foto_perfil;
-        $user->rol_id = 3;
+        $user->rol_id = ($request->has('proveedor')) ? 1 : 3;
         $user->save();
 
         $team = new Team();
@@ -58,6 +64,18 @@ class RegisterController extends Controller
 
         $user->current_team_id = $team->id;
         $user->save();
+
+        if($request->has('proveedor'))
+        {
+            $subcategoria = Subcategoria::findOrFail($request->subcategoria_id);
+
+            $tienda = new Tienda();
+            $tienda->nombre = $request->tienda_nombre;
+            $tienda->descripcion = $request->tienda_descripcion;
+            $tienda->user_id = $user->id;
+            $tienda->subcategoria_id = $subcategoria->id;
+            $tienda->save();
+        }
 
         verifyEmail($user->email_verified_at,$user->id,$user->email);
 

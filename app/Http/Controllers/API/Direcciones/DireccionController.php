@@ -111,7 +111,7 @@ class DireccionController extends Controller
 
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $rules = [
             'persona_x_recibe' => 'required|min:3',
