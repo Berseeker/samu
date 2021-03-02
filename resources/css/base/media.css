@@ -1,0 +1,5 @@
+@media (min-width: 768px) {
+    .md__cyan-desktop {
+        background-color: var(--main-color-cyan);
+    }
+}

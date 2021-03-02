@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "Along Sans Extra Bold";
+    src: url("/fonts/Along-Sans-Extra-Bold.ttf");
+}
+@font-face {
+    font-family: "Along Sans Semi Bold";
+    src: url("/fonts/Along-Sans-Semi-Bold.ttf");
+}
+@font-face {
+    font-family: "Along Sans Medium";
+    src: url("/fonts/Along-Sans-Medium.otf");
+}
+@font-face {
+    font-family: "LeoRoundedPro Bold";
+    src: url("/fonts/LeoRoundedPro-Bold.otf");
+}
+@font-face {
+    font-family: "LeoRoundedPro Medium";
+    src: url("/fonts/LeoRoundedPro-Medium.otf");
+}
+

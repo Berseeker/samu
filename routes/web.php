@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WEB\Auth\AuthController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,6 +18,9 @@ use App\Http\Controllers\WEB\Auth\VerifyEmailController;
 |
 */
 
+
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -26,7 +30,12 @@ Route::get('/', function () {
     ]);
 });
 
-// URL PARA VERIFICAR EL EMAIL 
+Route::get('/login', [AuthController::class,'login'])->name('login');
+Route::get('/registro', [AuthController::class,'registro'])->name('registro');
+
+
+
+// URL PARA VERIFICAR EL EMAIL
 Route::get('/verify-email-custom/{id}/{hash}', [VerifyEmailController::class, 'index'])
     ->middleware(['signed', 'throttle:6,1'])
     ->name('verify.email.custom');
