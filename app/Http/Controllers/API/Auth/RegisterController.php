@@ -14,7 +14,8 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Tienda;
-use App\Models\Subcategoria;
+use App\Models\Categoria;
+use App\Models\Direccion;
 
 use Mail;
 
@@ -28,7 +29,7 @@ class RegisterController extends Controller
             'email' => 'required|email',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required|same:password',
-            'rol_id' => 'required'
+            'rol' => 'required'
         ];
 
         $messages = [
@@ -39,7 +40,7 @@ class RegisterController extends Controller
             'password.confirmed' => 'Es necesario que confirmes tu password',
             'password_confirmation.required' => 'Por favor confirma tu password',
             'password_confirmation.same' => 'Las contraseñas no concuerdan',
-            'rol_id.required' => 'Por favor especifica si eres medico o paciente'
+            'rol.required' => 'Por favor especifica si eres medico o paciente'
         ];
 
         $this->validate($request,$rules,$messages);
@@ -47,13 +48,16 @@ class RegisterController extends Controller
         //queda pendiente de investigar
         //dd(url()->previous());
 
+        if($request->rol == 'proveedor')
+            $categoria = Categoria::findOrFail($request->categoria_id);
+
         $user = new User();
         $user->name = $request->nombre;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->telefono = $request->telefono;
         $user->foto_perfil = $request->foto_perfil;
-        $user->rol_id = ($request->has('proveedor')) ? 1 : 3;
+        $user->rol_id = ($request->rol == 'proveedor') ? 1 : 3;
         $user->save();
 
         $team = new Team();
@@ -65,17 +69,44 @@ class RegisterController extends Controller
         $user->current_team_id = $team->id;
         $user->save();
 
-        if($request->has('proveedor'))
-        {
-            $subcategoria = Subcategoria::findOrFail($request->subcategoria_id);
 
+        if($request->rol == 'proveedor')
+        {
             $tienda = new Tienda();
             $tienda->nombre = $request->tienda_nombre;
             $tienda->descripcion = $request->tienda_descripcion;
             $tienda->user_id = $user->id;
-            $tienda->subcategoria_id = $subcategoria->id;
+            $tienda->categoria_id = $categoria->id;
             $tienda->save();
+
+            $direccion = new Direccion();
+            $direccion->celular = $request->celular;
+            $direccion->ciudad = $request->ciudad;
+            $direccion->estado = $request->estado;
+            $direccion->colonia_delegacion = $request->colonia_delegacion;
+            $direccion->calle = $request->calle;
+            $direccion->no_ext = $request->no_ext;
+            $direccion->cp = $request->cp;
+            $direccion->tienda_id = $tienda->id;
+            $direccion->pais_id = $request->pais_id;
+            $direccion->save();
         }
+        if($request->rol == 'cliente')
+        {
+            $direccion = new Direccion();
+            $direccion->persona_x_recibe = $request->persona_x_recibe;
+            $direccion->celular = $request->celular;
+            $direccion->ciudad = $request->ciudad;
+            $direccion->estado = $request->estado;
+            $direccion->colonia_delegacion = $request->colonia_delegacion;
+            $direccion->calle = $request->calle;
+            $direccion->no_ext = $request->no_ext;
+            $direccion->referencias = $request->referencias;
+            $direccion->user_id = $user->id;
+            $direccion->pais_id = $request->pais_id;
+            $direccion->save();
+        }
+
 
         verifyEmail($user->email_verified_at,$user->id,$user->email);
 

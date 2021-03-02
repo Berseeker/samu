@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'juan.alucard.02@gmail.com',
             'telefono' => 9983208924,
             'password' => Hash::make('Harimakenji01@'),
-            'rol_id' => 5,
+            'rol_id' => 1,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -32,5 +32,6 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
     }
 }

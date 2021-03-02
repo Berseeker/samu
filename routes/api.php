@@ -71,7 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::get('tiendas',[TiendaController::class,'index']);
     Route::get('tienda/{id}',[TiendaController::class,'show']);
     Route::post('tienda/{id}',[TiendaController::class,'update']);
-    Route::get('store-tienda',[TiendaController::class,'store']);
+    Route::post('tienda',[TiendaController::class,'store']);
 
     Route::get('categorias',[CategoriaControler::class,'index']);
     Route::get('categoria/{id}',[CategoriaControler::class,'show']);
