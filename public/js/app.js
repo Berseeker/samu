@@ -6232,7 +6232,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.logo {\n    width: 8rem;\n    height: 4rem;\n}\n.texto-100 {\n    font-size: 1rem;\n}\n@media (min-width: 1280px) {\n.texto-100 {\n        font-size: 1.2rem;\n}\nfooter {\n        position: absolute;\n        bottom: 0;\n        width: 100%;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.logo {\r\n    width: 8rem;\r\n    height: 4rem;\n}\n.texto-100 {\r\n    font-size: 1rem;\n}\n@media (min-width: 1280px) {\n.texto-100 {\r\n        font-size: 1.2rem;\n}\nfooter {\r\n        position: absolute;\r\n        bottom: 0;\r\n        width: 100%;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6256,7 +6256,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.hero {\n    position: relative;\n    height: calc(100vh + 40vh);\n    overflow-x: hidden;\n    overflow-y: hidden;\n}\n.hero-img {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: top center;\n    background-image: url('/assets/brand/Bg_1_Movil.jpg');\n}\n@media (min-width: 768px) {\n.hero {\n        position: relative;\n        height: calc(100vh);\n        overflow-x: hidden;\n        overflow-y: hidden;\n}\n.hero-img {\n        position: absolute;\n        left: 0;\n        top: 0;\n        width: 100%;\n        height: 100%;\n        /*padding-top: 100px;*/\n        /*margin-bottom: 70px;*/\n        background-size: cover;\n        background-repeat: no-repeat;\n        background-position: top center;\n        background-image: url('/assets/brand/Bg_1.jpg');\n}\n}\n@media (min-width: 1280px) {\n.hero {\n        position: relative;\n        height: calc(100vh - 132px);\n        overflow-x: hidden;\n        overflow-y: hidden;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.hero {\r\n    position: relative;\r\n    height: calc(100vh + 40vh);\r\n    overflow-x: hidden;\r\n    overflow-y: hidden;\n}\n.hero-img {\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n    background-position: top center;\r\n    background-image: url('/assets/brand/Bg_1_Movil.jpg');\n}\n@media (min-width: 768px) {\n.hero {\r\n        position: relative;\r\n        height: calc(100vh);\r\n        overflow-x: hidden;\r\n        overflow-y: hidden;\n}\n.hero-img {\r\n        position: absolute;\r\n        left: 0;\r\n        top: 0;\r\n        width: 100%;\r\n        height: 100%;\r\n        /*padding-top: 100px;*/\r\n        /*margin-bottom: 70px;*/\r\n        background-size: cover;\r\n        background-repeat: no-repeat;\r\n        background-position: top center;\r\n        background-image: url('/assets/brand/Bg_1.jpg');\n}\n}\n@media (min-width: 1280px) {\n.hero {\r\n        position: relative;\r\n        height: calc(100vh - 132px);\r\n        overflow-x: hidden;\r\n        overflow-y: hidden;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6280,7 +6280,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.h-100vh {\n    height: calc(100vh - 100px);\n}\n.imagen {\n    position: absolute;\n    background-image: url(\"/assets/brand/Bg_1_Movil.jpg\");\n    height: calc(100vh + 200px);\n    background-size: cover;\n    background-position: center;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n}\n@media (min-width: 768px) {\n.imagen {\n        position: absolute;\n        background-image: url(\"/assets/brand/Bg_1.jpg\");\n        height: 100vh;\n        background-size: cover;\n        background-position: center;\n        top: 0;\n        bottom: 0;\n        left: 0;\n        right: 0;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.h-100vh {\r\n    height: calc(100vh - 100px);\n}\n.imagen {\r\n    position: absolute;\r\n    background-image: url(\"/assets/brand/Bg_1_Movil.jpg\");\r\n    height: calc(100vh + 200px);\r\n    background-size: cover;\r\n    background-position: center;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\n}\n@media (min-width: 768px) {\n.imagen {\r\n        position: absolute;\r\n        background-image: url(\"/assets/brand/Bg_1.jpg\");\r\n        height: 100vh;\r\n        background-size: cover;\r\n        background-position: center;\r\n        top: 0;\r\n        bottom: 0;\r\n        left: 0;\r\n        right: 0;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

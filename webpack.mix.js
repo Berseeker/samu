@@ -15,6 +15,10 @@ const mix = require('laravel-mix');
 //     .sass('resources/sass/app.scss', 'public/css')
 //     .webpackConfig(require('./webpack.config'));
 
+// // Dashboard theme assets...
+// mix.js('resources/js/dashboard.js', 'public/js')
+//     .sass('resources/sass/dashboard/dashboard.scss', 'public/css');
+
 
 mix.js('resources/js/app.js', 'public/js').vue()
     .postCss('resources/css/app.css', 'public/css', [
@@ -24,10 +28,6 @@ mix.js('resources/js/app.js', 'public/js').vue()
     ])
     .webpackConfig(require('./webpack.config'));
 
-
-// // Dashboard theme assets...
-// mix.js('resources/js/dashboard.js', 'public/js')
-//     .sass('resources/sass/dashboard/dashboard.scss', 'public/css');
 
 if (mix.inProduction()) {
     mix.version();
