@@ -16,7 +16,10 @@ class CreateDivisasTable extends Migration
         Schema::create('divisas', function (Blueprint $table) {
             $table->id();
             $table->string('moneda');
-            $table->double('valor');
+            $table->double('valor')->nullable();
+            $table->string('pais');
+            $table->longText('bandera');
+            $table->string('alpha_code');
             $table->timestamps();
             $table->softDeletes();
         });

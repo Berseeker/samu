@@ -21,6 +21,10 @@ class CreateTiendasTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->unsignedBigInteger('divisa_id');
+            $table->foreign('divisa_id')->references('id')->on('divisas');
+            $table->longText('logo')->nullable();
+            $table->longText('caratula')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 
 use App\Models\Divisa;
+use App\Models\Pais;
 
 class DivisaController extends Controller
 {
@@ -131,6 +132,44 @@ class DivisaController extends Controller
                 'data' => null,
                 'code' => 200
             ],200);
+    }
+
+    public function import()
+    {
+        $paises = Pais::all();
+        $pointer = 0;
+        $count = 0;
+        foreach($paises as $pais)
+        {
+            $currency = json_decode($pais->monedas);
+            $prev = Divisa::where('alpha_code',$pais->alpha_code)->get();
+            if($prev->isEmpty())
+            {
+                $divisa = new Divisa();
+                $divisa->moneda = ($currency[0]->code == null) ? 'USD' : $currency[0]->code;
+                $divisa->pais = $pais->nombre;
+                $divisa->bandera = $pais->bandera;
+                $divisa->alpha_code = $pais->alpha_code;
+                $divisa->save();
+                $count++;
+            }
+            else
+            {
+                $prev[0]->moneda = ($currency[0]->code == null) ? 'USD' : $currency[0]->code;
+                $prev[0]->pais = $pais->nombre;
+                $prev[0]->bandera = $pais->bandera;
+                $prev[0]->alpha_code = $pais->alpha_code;
+                $prev[0]->save();
+                $pointer++;
+            } 
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se crearon '.$count.' divisas y se actualizaron '.$pointer.' divisas',
+            'data' => NULL,
+            'code' => 200
+        ],200);
     }
 
 }

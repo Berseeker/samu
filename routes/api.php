@@ -60,6 +60,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::post('store-divisa',[DivisaController::class,'store']);
     Route::delete('delete-divisa/{id}',[DivisaController::class,'destroy']);
     Route::get('restore-divisa/{id}',[DivisaController::class,'restore']);
+    Route::get('sync-divisa',[DivisaController::class,'import']);
 
     //RUTAS DE DIRECCIONES PARA CLIENTES FINALES
     Route::get('direcciones',[DireccionController::class,'index']);
