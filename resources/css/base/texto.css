@@ -1,0 +1,38 @@
+.texto-along-extra-bold {
+    font-family: "Along Sans Extra Bold";
+}
+
+.texto-along-semi-bold {
+    font-family: "Along Sans Semi Bold";
+}
+
+.texto-along-medium {
+    font-family: "Along Sans Medium";
+}
+
+.texto-leo-bold {
+    font-family: "LeoRoundedPro Bold";
+}
+
+.texto-leo-medium {
+    font-family: "LeoRoundedPro Medium";
+}
+
+.texto-color-amarillo {
+    color: var(--main-color-amarillo);
+}
+
+.texto-color-magenta {
+    color: var(--main-color-magenta);
+}
+
+.texto-color-morado {
+    color: var(--main-color-morado);
+}
+
+.texto-color-cyan {
+    color: var(--main-color-cyan);
+}
+
+
+

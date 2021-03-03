@@ -1,0 +1,20 @@
+:root {
+    --main-color-amarillo: #ffc000;
+    --main-color-magenta: #ff005d;
+    --main-color-morado: #673ab7;
+    --main-color-cyan: #06b0d7;
+}
+
+.bg-amarillo{
+    background-color: var(--main-color-amarillo);
+}
+.bg-magenta{
+    background-color: var(--main-color-magenta);
+}
+.bg-morado{
+    background-color: var(--main-color-morado);
+}
+.bg-cyan{
+    background-color: var(--main-color-cyan);
+}
+
