@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\File;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
 
@@ -123,7 +124,8 @@ class CategoriaControler extends Controller
     public function syncData()
     {
         //dd(public_path('storage').'/taxonomy_google.xlsx');
-        Excel::import(new CategoriaImport, 'stuff_google.xls','public');
+        $file = File::first();
+        Excel::import(new CategoriaImport, $file->nombre,'public');
 
         return response()->json([
             'status' => 'success',

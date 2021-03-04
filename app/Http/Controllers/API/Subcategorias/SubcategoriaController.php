@@ -9,6 +9,7 @@ use App\Imports\SubcategoriaImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 
+use App\Models\File;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
 use App\Models\Producto;
@@ -150,7 +151,8 @@ class SubcategoriaController extends Controller
     public function syncData()
     {
         //dd(public_path('storage').'/taxonomy_google.xlsx');
-        Excel::import(new SubcategoriaImport, 'stuff_google.xls');
+        $file = File::first();
+        Excel::import(new SubcategoriaImport, $file->nombre,'public');
 
         return response()->json([
             'status' => 'success',
@@ -163,7 +165,8 @@ class SubcategoriaController extends Controller
     public function syncChild()
     {
         //dd(public_path('storage').'/stuff_google.xlsx');
-        Excel::import(new ChildImport, 'stuff_google.xls');
+        $file = File::first();
+        Excel::import(new ChildImport, $file->nombre,'public');
 
         return response()->json([
             'status' => 'success',
