@@ -6,9 +6,7 @@
             </div>
         </header>
 
-        <main class="h-100vh">
-            <slot></slot>
-        </main>
+        <slot></slot>
 
         <footer class="text-black bg-cyan">
             <!--version desktop-->
@@ -59,24 +57,20 @@ export default {
     height: 4rem;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
+
 
 .texto-100 {
     font-size: 1rem;
 }
 
-.h-100vh {
-    /*height: calc(100vh - 100px);*/
-    height: auto;
-    /*overflow-y: hidden;*/
-}
 @media (min-width: 1280px) {
     .texto-100 {
         font-size: 1.2rem;
+    }
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 }
 </style>
