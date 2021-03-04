@@ -120,8 +120,8 @@ class CategoriaControler extends Controller
 
     public function syncData()
     {
-        dd(public_path('storage').'/taxonomy_google.xlsx');
-        Excel::import(new CategoriaImport, 'taxonomy_google.xls');
+        //dd(public_path('storage').'/taxonomy_google.xlsx');
+        Excel::import(new CategoriaImport, 'taxonomy_google.xls','public');
 
         return response()->json([
             'status' => 'success',

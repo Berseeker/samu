@@ -186,11 +186,11 @@ class TiendaController extends Controller
                     Storage::disk('tienda')->delete($tienda->logo);
 
                     $name = Auth::user()->id.'_'.Auth::user()->name;
-                    $path = Storage::disk('tienda')->put($name, $request->file('logo'));
+                    $path = Storage::disk('tienda')->put($name, $request->file('logo'),'public');
                 }
             }else{
                 $name = Auth::user()->id.'_'.Auth::user()->name;
-                $path = Storage::disk('tienda')->put($name, $request->file('logo'));
+                $path = Storage::disk('tienda')->put($name, $request->file('logo'),'public');
             }
 
             if($tienda->caratula != null)
