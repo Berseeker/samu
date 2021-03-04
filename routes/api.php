@@ -36,6 +36,7 @@ Route::get('import-excel',[CategoriaControler::class,'syncData']);
 Route::get('import-subcategorias',[SubcategoriaController::class,'syncData']);
 Route::get('import-child',[SubcategoriaController::class,'syncChild']);
 Route::get('sync-divisa',[DivisaController::class,'import']);
+Route::post('export-excel',[CategoriaControler::class,'storeFile']);
 
 
 //verified.email

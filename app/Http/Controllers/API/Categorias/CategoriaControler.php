@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Imports\CategoriaImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Categoria;
 use App\Models\Subcategoria;
@@ -127,6 +129,30 @@ class CategoriaControler extends Controller
             'status' => 'success',
             'message' => 'Se importaron las categorias del Excel a la BD',
             'data' => NULL,
+            'code' => 200
+        ],200);
+    }
+
+    public function storeFile(Request $request)
+    {
+        $rules = [
+            'excel' => 'required'
+        ];
+
+        $messages = [
+            'excel.required' => 'Adjunta un archivo'
+        ];
+        $this->validate($request,$rules,$messages);
+
+        $path = Storage::disk('public')->put('excel', $request->file('excel'),'public');
+        DB::table('excel')->insert([
+            'nombre' => $path
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'el archivo se subio exitosamente',
+            'data' => null,
             'code' => 200
         ],200);
     }
