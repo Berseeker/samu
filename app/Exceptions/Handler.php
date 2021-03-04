@@ -66,6 +66,7 @@ class Handler extends ExceptionHandler
                 return response()->json(['message'=>'error','error'=>'No posees permisos para esta acción','code'=>403],403);
             }
             if($exception instanceof NotFoundHttpException){
+                //dd($exception);
                 return response()->json(['message'=>'error','error'=>'No se encontró la URL especificada','code'=>404],404);
             }
             if($exception instanceof MethodNotAllowedHttpException){

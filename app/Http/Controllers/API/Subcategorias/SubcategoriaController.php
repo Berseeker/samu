@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API\Subcategorias;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Imports\ChildImport;
+use App\Imports\SubcategoriaImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 
 use App\Models\Categoria;
@@ -15,7 +17,7 @@ class SubcategoriaController extends Controller
 {
     public function index()
     {
-        $subcategorias = Subcategoria::all();
+        $subcategorias = Subcategoria::with('categoria')->where('child',null)->get();
         $message = 'Se encontraron '.count($subcategorias).' subcategorias registradas';
         $data = null;
         if(!$subcategorias->isEmpty())    
@@ -41,6 +43,25 @@ class SubcategoriaController extends Controller
         ],200);
     }
 
+    public function showChild($id)
+    {
+        $subcategoria = Subcategoria::with('categoria')->findOrFail($id);
+
+        $hijos = Subcategoria::where('child',$subcategoria->id)->get();
+
+        $data = [
+            'subcategoria' => $subcategoria,
+            'hijos' => $hijos
+        ];
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Mostrando las ramas de la subcategoria solicitada',
+            'data' => $data,
+            'code' => 200
+        ],200);
+    }
+
     public function store(Request $request)
     {
         $rules = [
@@ -60,7 +81,7 @@ class SubcategoriaController extends Controller
         $subcategoria = new Subcategoria();
         $subcategoria->nombre = Str::of(Str::of($request->nombre)->lower())->title();
         $subcategoria->categoria_id = $categoria->id;
-        $subcategoria->tag = Str::of($request->nombre)->lower();
+        $subcategoria->tag = Str::slug(Str::of($request->nombre)->lower());
         $subcategoria->save();
 
         return response()->json([
@@ -90,7 +111,7 @@ class SubcategoriaController extends Controller
         $subcategoria = Subcategoria::findOrFail($id);
         $subcategoria->nombre = Str::of(Str::of($request->nombre)->lower())->title();
         $subcategoria->categoria_id = $categoria->id;
-        $subcategoria->tag = Str::of($request->nombre)->lower();
+        $subcategoria->tag = Str::slug(Str::of($request->nombre)->lower());
         $subcategoria->save();
 
         return response()->json([
@@ -124,5 +145,31 @@ class SubcategoriaController extends Controller
             'data' => $data,
             'code' => $code
         ],$code);
+    }
+    
+    public function syncData()
+    {
+        //dd(public_path('storage').'/taxonomy_google.xlsx');
+        Excel::import(new SubcategoriaImport, 'taxonomy_google.xls');
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se importaron las categorias del Excel a la BD',
+            'data' => NULL,
+            'code' => 200
+        ],200);
+    }
+
+    public function syncChild()
+    {
+        //dd(public_path('storage').'/taxonomy_google.xlsx');
+        Excel::import(new ChildImport, 'taxonomy_google.xls');
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se importaron las categorias del Excel a la BD',
+            'data' => NULL,
+            'code' => 200
+        ],200);
     }
 }

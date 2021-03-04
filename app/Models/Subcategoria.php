@@ -10,6 +10,10 @@ class Subcategoria extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nombre', 'categoria_id', 'tag', 'child'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',

@@ -11,6 +11,10 @@ class Categoria extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nombre', 'icon', 'tag',
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',

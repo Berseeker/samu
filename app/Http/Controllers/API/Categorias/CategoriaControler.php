@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\Categorias;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Imports\CategoriaImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\Categoria;
 use App\Models\Subcategoria;
@@ -29,7 +31,7 @@ class CategoriaControler extends Controller
 
     public function show($id)
     {
-        $categoria = Categoria::with('subcategorias')->findOrFail($id);
+        $categoria = Categoria::findOrFail($id);
 
         return response()->json([
             'status' => 'success',
@@ -54,7 +56,7 @@ class CategoriaControler extends Controller
         $categoria = new Categoria();
         $categoria->nombre = Str::of(Str::of($request->nombre)->lower())->title();
         $categoria->icon = ($request->icon == "") ? 'fas fa-box' : $request->icon;
-        $categoria->tag = Str::of($request->nombre)->lower();
+        $categoria->tag = Str::slug(Str::of($request->nombre)->lower());
         $categoria->save();
 
         return response()->json([
@@ -80,7 +82,7 @@ class CategoriaControler extends Controller
         $categoria =  Categoria::findOrFail($id);
         $categoria->nombre = Str::of(Str::of($request->nombre)->lower())->title();
         $categoria->icon = ($request->icon == "") ? 'fas fa-box' : $request->icon;
-        $categoria->tag = Str::of($request->nombre)->lower();
+        $categoria->tag = Str::slug(Str::of($request->nombre)->lower());
         $categoria->save();
 
         return response()->json([
@@ -114,5 +116,18 @@ class CategoriaControler extends Controller
             'data' => $data,
             'code' => $code
         ],$code);
+    }
+
+    public function syncData()
+    {
+        //dd(public_path('storage').'/taxonomy_google.xlsx');
+        Excel::import(new CategoriaImport, 'taxonomy_google.xls');
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se importaron las categorias del Excel a la BD',
+            'data' => NULL,
+            'code' => 200
+        ],200);
     }
 }
