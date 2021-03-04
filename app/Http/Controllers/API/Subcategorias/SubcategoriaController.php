@@ -150,7 +150,7 @@ class SubcategoriaController extends Controller
     public function syncData()
     {
         //dd(public_path('storage').'/taxonomy_google.xlsx');
-        Excel::import(new SubcategoriaImport, 'taxonomy_google.xls');
+        Excel::import(new SubcategoriaImport, 'stuff_google.xls');
 
         return response()->json([
             'status' => 'success',
@@ -162,8 +162,8 @@ class SubcategoriaController extends Controller
 
     public function syncChild()
     {
-        //dd(public_path('storage').'/taxonomy_google.xlsx');
-        Excel::import(new ChildImport, 'taxonomy_google.xls');
+        //dd(public_path('storage').'/stuff_google.xlsx');
+        Excel::import(new ChildImport, 'stuff_google.xls');
 
         return response()->json([
             'status' => 'success',
