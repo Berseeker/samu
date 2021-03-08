@@ -19,7 +19,6 @@ class CategoriaImport implements ToModel,WithBatchInserts,WithChunkReading
 
     public function model(array $row)
     {
-        $currentRowNumber = $this->getRowNumber();
         
         $categoria = Str::title(Str::lower($row[1]));
         $prev = Categoria::where('nombre',$categoria)->get();

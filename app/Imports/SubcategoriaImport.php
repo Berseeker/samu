@@ -20,7 +20,6 @@ class SubcategoriaImport implements ToModel,WithBatchInserts,WithChunkReading
 
     public function model(array $row)
     {
-        $currentRowNumber = $this->getRowNumber();
         
         $categoria_string = Str::title(Str::lower($row[1]));
         $categoria = Categoria::where('nombre',$categoria_string)->get();
