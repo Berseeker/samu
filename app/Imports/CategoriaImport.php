@@ -4,17 +4,23 @@ namespace App\Imports;
 
 use App\Models\Categoria;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Illuminate\Support\Str;
 
-class CategoriaImport implements ToModel
+class CategoriaImport implements ToModel,WithBatchInserts,WithChunkReading
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    use RemembersRowNumber;
+
     public function model(array $row)
     {
+        $currentRowNumber = $this->getRowNumber();
+        
         $categoria = Str::title(Str::lower($row[1]));
         $prev = Categoria::where('nombre',$categoria)->get();
         if($prev->isEmpty() && $row[1] != "")
@@ -26,5 +32,15 @@ class CategoriaImport implements ToModel
                 'updated_at' => now()
             ]);
         }
+    }
+
+    public function batchSize(): int
+    {
+        return 20;
+    }
+    
+    public function chunkSize(): int
+    {
+        return 20;
     }
 }
