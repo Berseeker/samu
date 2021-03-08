@@ -11,6 +11,7 @@ use App\Models\Tienda;
 use App\Models\Categoria;
 use App\Models\Direccion;
 use App\Models\Divisa;
+use App\Models\Pais;
 
 class TiendaController extends Controller
 {

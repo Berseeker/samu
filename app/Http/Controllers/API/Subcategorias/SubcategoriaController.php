@@ -152,7 +152,7 @@ class SubcategoriaController extends Controller
     {
         //dd(public_path('storage').'/taxonomy_google.xlsx');
         $file = File::first();
-        dd($file);
+ 
         Excel::import(new SubcategoriaImport, $file->nombre,'public');
 
         return response()->json([
