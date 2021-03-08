@@ -4,7 +4,7 @@
             <div class="hero-img"></div>
             <div class="container px-5 mx-auto mt-10 md:mt-0 lg:pt-20 flex sm:mb-40">
                 <div
-                    class="xl:w-1/3 lg:w-1/2  md:w-1/2 md:ml-auto lg:ml-auto w-full  md:mt-0 relative z-10 animate__animated animate__fadeInRight animate__slower">
+                    class="xl:w-1/3 lg:w-1/2  md:w-1/2 md:ml-auto lg:ml-auto w-full  md:mt-0 relative z-10 animate__animated animate__fadeInRight ">
                     <h1 class="uppercase text-black text-5xl uppercase my-5 font-extrabold">venda online con
                         samu.app</h1>
                     <p class="uppercase text-black text-xl">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
@@ -30,16 +30,18 @@
                                 class="uppercase text-white bg-black font-bold border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 text-lg">
                                 Ingresar
                             </button>
-                            <button
-                                class="uppercase text-blue-500 bg-white font-bold border-0 py-2 px-6 focus:outline-none">
-                                Crear una nueva cuenta
-                            </button>
+                            <a href="/registro" class="uppercase text-blue-500 bg-white font-bold border-0 py-2 px-6 focus:outline-none">
+                                CREAR UNA NUEVA CUENTA
+                            </a>
+<!--                            <button-->
+<!--                                class="uppercase text-blue-500 bg-white font-bold border-0 py-2 px-6 focus:outline-none">-->
+<!--                                Crear una nueva cuenta-->
+<!--                            </button>-->
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
     </AuthLayout>
 </template>
 
