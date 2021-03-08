@@ -16,7 +16,6 @@ class ChildImport implements ToModel,WithBatchInserts,WithChunkReading
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    use RemembersRowNumber;
 
     public function model(array $row)
     {
