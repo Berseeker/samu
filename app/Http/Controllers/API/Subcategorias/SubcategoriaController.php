@@ -150,11 +150,7 @@ class SubcategoriaController extends Controller
     
     public function syncData()
     {
-        set_time_limit(60);
-        //dd(public_path('storage').'/taxonomy_google.xlsx');
-        $file = File::first();
- 
-        Excel::import(new SubcategoriaImport, $file->nombre,'public');
+        Excel::import(new SubcategoriaImport, 'excel/taxonomi_samu.xls','s3');
 
         return response()->json([
             'status' => 'success',
@@ -166,9 +162,7 @@ class SubcategoriaController extends Controller
 
     public function syncChild()
     {
-        //dd(public_path('storage').'/stuff_google.xlsx');
-        $file = File::first();
-        Excel::import(new ChildImport, $file->nombre,'public');
+        Excel::import(new ChildImport, 'excel/taxonomi_samu.xls','s3');
 
         return response()->json([
             'status' => 'success',
