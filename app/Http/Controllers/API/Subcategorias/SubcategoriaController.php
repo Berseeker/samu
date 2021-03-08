@@ -150,6 +150,7 @@ class SubcategoriaController extends Controller
     
     public function syncData()
     {
+        set_time_limit(60);
         //dd(public_path('storage').'/taxonomy_google.xlsx');
         $file = File::first();
  
