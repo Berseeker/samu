@@ -27,7 +27,7 @@ class ChildImport implements OnEachRow
                 'nombre' => $nombre,
                 'tag' => Str::slug(Str::lower($row[3])),
                 'categoria_id' => $categoria[0]->id,
-                'child' => ($subcategoria->isEmpty()) ? 0 : $subcategoria[0]->id,
+                'child' => $subcategoria[0]->id,
             ]);
         }
         
