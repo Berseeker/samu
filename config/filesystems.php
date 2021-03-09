@@ -65,7 +65,7 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'cache' => [
-                'store' => 'memcached',
+                'store' => 'database',
                 'expire' => 600,
                 'prefix' => 'cache-prefix',
             ],
