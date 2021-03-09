@@ -8,6 +8,7 @@ use App\Imports\ChildImport;
 use App\Imports\SubcategoriaImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 use App\Models\File;
 use App\Models\Categoria;
@@ -151,6 +152,7 @@ class SubcategoriaController extends Controller
     public function syncData()
     {
         Excel::import(new SubcategoriaImport, 'excel/taxonomi_samu.xls','s3');
+        Cache::flush();
 
         return response()->json([
             'status' => 'success',
@@ -163,6 +165,7 @@ class SubcategoriaController extends Controller
     public function syncChild()
     {
         Excel::import(new ChildImport, 'excel/taxonomi_samu.xls','s3');
+        Cache::flush();
 
         return response()->json([
             'status' => 'success',
