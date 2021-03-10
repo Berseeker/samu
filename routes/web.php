@@ -33,6 +33,11 @@ Route::get('/', function () {
 Route::get('login', [AuthController::class,'login'])->name('login');
 Route::get('/registro', [AuthController::class,'registro'])->name('registro');
 
+Route::get('/pusher',function(){
+    
+    return 'tienda stored';
+});
+
 
 
 // URL PARA VERIFICAR EL EMAIL

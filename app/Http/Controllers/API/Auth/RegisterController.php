@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
+use App\Events\TiendaRegisterEvent;
 use Illuminate\Support\Str;
 use App\Mail\VerifyEmail;
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ use App\Models\Team;
 use App\Models\Tienda;
 use App\Models\Categoria;
 use App\Models\Direccion;
+use App\Models\Divisa;
 
 use Mail;
 
@@ -60,23 +62,25 @@ class RegisterController extends Controller
         $user->rol_id = ($request->rol == 'proveedor') ? 1 : 3;
         $user->save();
 
-        $team = new Team();
+        /*$team = new Team();
         $team->user_id = $user->id;
         $team->name = explode(' ', $user->name, 2)[0]."'s Team";
         $team->personal_team = true;
         $team->save();
-
+        
         $user->current_team_id = $team->id;
-        $user->save();
+        $user->save();*/
 
+        $divisa = Divisa::findOrFail($request->divisa_id);
 
         if($request->rol == 'proveedor')
         {
             $tienda = new Tienda();
             $tienda->nombre = $request->tienda_nombre;
-            $tienda->descripcion = $request->tienda_descripcion;
+            $tienda->descripcion = $request->tienda_descripcion; // opcional
             $tienda->user_id = $user->id;
-            $tienda->categoria_id = $categoria->id;
+            $tienda->categoria_id = $categoria->id; 
+            $tienda->divisa_id = $divisa->id;
             $tienda->save();
 
             $direccion = new Direccion();
@@ -109,6 +113,8 @@ class RegisterController extends Controller
 
 
         verifyEmail($user->email_verified_at,$user->id,$user->email);
+        if($request->rol == 'proveedor')
+            event(new TiendaRegisterEvent($tienda));
 
         return response()->json([
             'status' => 'success',

@@ -34,7 +34,7 @@ class CategoriaControler extends Controller
 
     public function show($id)
     {
-        $categoria = Categoria::findOrFail($id);
+        $categoria = Categoria::with('subcategorias')->findOrFail($id);
 
         return response()->json([
             'status' => 'success',

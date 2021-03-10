@@ -32,11 +32,24 @@ Route::middleware('auth:sanctum')->get('verify-email',[VerifyEmailController::cl
 
 //ENDPOINTS PARA LLENAR LA BD YA SEA DE UN API O ARCHIVOS DE EXCEL -- SIEMPRE EJECUTARLOS AL HACER GIT CLONE 
 Route::get('sync-paises-data',[PaisController::class,'syncData']);
-Route::get('import-excel',[CategoriaControler::class,'syncData']);
+Route::get('import-categorias',[CategoriaControler::class,'syncData']);
 Route::get('import-subcategorias',[SubcategoriaController::class,'syncData']);
 Route::get('import-child',[SubcategoriaController::class,'syncChild']);
 Route::get('sync-divisa',[DivisaController::class,'import']);
-Route::post('export-excel',[CategoriaControler::class,'storeFile']);
+//Route::post('export-excel',[CategoriaControler::class,'storeFile']);
+
+Route::get('categorias',[CategoriaControler::class,'index']);
+Route::get('categoria/{id}',[CategoriaControler::class,'show']);
+
+Route::get('subcategorias',[SubcategoriaController::class,'index']);
+Route::get('subcategoria/{id}',[SubcategoriaController::class,'show']);
+Route::get('subcategoria-child/{id}',[SubcategoriaController::class,'showChild']);
+
+Route::get('paises',[PaisController::class,'index']);
+Route::get('pais/{id}',[PaisController::class,'show']);
+
+Route::get('divisas',[DivisaController::class,'index']);
+Route::get('divisa/{id}',[DivisaController::class,'show']);
 
 
 //verified.email
@@ -56,8 +69,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::delete('delete-cliente/{id}',[ClienteController::class,'destroy']);
     Route::get('restore-cliente/{id}',[ClienteController::class,'restore']);
 
-    Route::get('divisas',[DivisaController::class,'index']);
-    Route::get('divisa/{id}',[DivisaController::class,'show']);
+    
     Route::post('divisa/{id}',[DivisaController::class,'update']);
     Route::post('store-divisa',[DivisaController::class,'store']);
     Route::delete('delete-divisa/{id}',[DivisaController::class,'destroy']);
@@ -76,22 +88,17 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::post('tienda/{id}',[TiendaController::class,'update']);
     Route::post('tienda',[TiendaController::class,'store']);
 
-    Route::get('categorias',[CategoriaControler::class,'index']);
-    Route::get('categoria/{id}',[CategoriaControler::class,'show']);
+    
     Route::post('categoria/{id}',[CategoriaControler::class,'update']);
     Route::post('categoria',[CategoriaControler::class,'store']);
     Route::delete('categoria/{id}',[CategoriaControler::class,'delete']);
     
 
-    Route::get('subcategorias',[SubcategoriaController::class,'index']);
-    Route::get('subcategoria/{id}',[SubcategoriaController::class,'show']);
-    Route::get('subcategoria-child/{id}',[SubcategoriaController::class,'showChild']);
     Route::post('subcategoria/{id}',[SubcategoriaController::class,'update']);
     Route::post('subcategoria',[SubcategoriaController::class,'store']);
     Route::delete('subcategoria/{id}',[SubcategoriaController::class,'delete']);
 
-    Route::get('paises',[PaisController::class,'index']);
-    Route::get('pais/{id}',[PaisController::class,'show']);
+    
     Route::delete('delete-pais',[PaisController::class,'destroy']);
     Route::get('restore-pais',[PaisController::class,'restore']);
 

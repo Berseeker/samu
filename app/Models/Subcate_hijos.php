@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Categoria;
 
-class Subcategoria extends Model
+class Subcate_hijos extends Model
 {
     use HasFactory;
 
+    protected $table = 'subcategoria_hijos';
+
     protected $fillable = [
-        'nombre', 'categoria_id', 'tag', 'child'
+        'nombre', 'subcategoria_id', 'tag'
     ];
 
     protected $hidden = [
@@ -20,13 +21,9 @@ class Subcategoria extends Model
         'deleted_at'
     ];
 
-    public function categoria()
+    public function subcategorias()
     {
-        return $this->belongsTo(Categoria::class);
+        return $this->belongsTo(Subcategoria::class,'subcategoria_id');
     }
-
-    public function hijos()
-    {
-        return $this->hasMany(Subcate_hijos::class);
-    }
+    
 }

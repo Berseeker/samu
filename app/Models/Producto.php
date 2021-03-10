@@ -14,4 +14,9 @@ class Producto extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function subcategoria()
+    {
+        return $this->belongsTo(Subcate_hijos::class,'subcategoria_id','id');
+    }
 }

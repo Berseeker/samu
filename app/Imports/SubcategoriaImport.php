@@ -22,7 +22,8 @@ class SubcategoriaImport implements OnEachRow
         $categoria = Categoria::where('nombre',Str::title(Str::lower($row[1])))->get();
         $nombre = Str::title(Str::lower($row[2]));
 
-        if($nombre != ""){
+        if($nombre != "")
+        {
             Subcategoria::firstOrCreate([
                 'nombre' => $nombre,
                 'tag' => Str::slug(Str::lower($row[2])),
