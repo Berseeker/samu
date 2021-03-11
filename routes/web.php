@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\WEB\Auth\AuthController;
+use App\Http\Controllers\WEB\Panel\PanelController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,17 +22,19 @@ use App\Http\Controllers\WEB\Auth\VerifyEmailController;
 
 
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+//Route::get('/', function () {
+//    return Inertia::render('Welcome', [
+//        'canLogin' => Route::has('login'),
+//        'canRegister' => Route::has('register'),
+//        'laravelVersion' => Application::VERSION,
+//        'phpVersion' => PHP_VERSION,
+//    ]);
+//});
 
-Route::get('/login', [AuthController::class,'login'])->name('login');
-Route::get('/registro', [AuthController::class,'registro'])->name('registro');
+
+Route::get('{any?}', [AuthController::class,'indexView']);
+//Route::get('/registro', [AuthController::class,'registro'])->name('registro');
+//Route::get('/panel', [PanelController::class,'index'])->name('panel.index');
 
 
 
@@ -40,6 +43,6 @@ Route::get('/verify-email-custom/{id}/{hash}', [VerifyEmailController::class, 'i
     ->middleware(['signed', 'throttle:6,1'])
     ->name('verify.email.custom');
 
-Route::middleware(['auth:sanctum','verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+//Route::middleware(['auth:sanctum','verified'])->get('/dashboard', function () {
+//    return Inertia::render('Dashboard');
+//})->name('dashboard');

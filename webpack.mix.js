@@ -20,7 +20,7 @@ const mix = require('laravel-mix');
 //     .sass('resources/sass/dashboard/dashboard.scss', 'public/css');
 
 
-mix.js('resources/js/app.js', 'public/js').vue()
+mix.js('resources/js/main.js', 'public/js').vue()
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),

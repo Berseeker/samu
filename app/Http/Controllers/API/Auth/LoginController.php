@@ -43,7 +43,7 @@ class LoginController extends Controller
                 ],200);
             }else{
                 return response()->json([
-                    'status' => 'error',
+                    'status' => false,
                     'message' => 'Password/Email incorrectos',
                     'data' => null,
                     'code' => 500
@@ -51,7 +51,7 @@ class LoginController extends Controller
             }
         }else{
             return response()->json([
-                'status' => 'error',
+                'status' => false,
                 'message' => 'Password/Email incorrectos',
                 'data' => null,
                 'code' => 500

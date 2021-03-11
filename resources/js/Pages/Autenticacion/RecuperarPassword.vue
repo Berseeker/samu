@@ -1,10 +1,10 @@
 <template>
   <AuthLayout>
-    <section class="hero">
+    <section class="hero bg-gray-200">
       <div class="hero-img"></div>
-      <div class="container px-5 mx-auto mt-10 md:mt-0 lg:pt-20 flex sm:mb-40">
+      <div class="container px-5 mx-auto mt-10 md:mt-0 lg:pt-20 flex sm:mb-40 justify-center">
         <div
-          class="xl:w-1/3 lg:w-1/2 md:w-1/2 md:ml-auto lg:ml-auto w-full md:mt-0 relative z-10 animate__animated animate__fadeInRight"
+          class="w-1/2 animate__animated animate__fadeInUp"
         >
           <h1 class="uppercase text-black text-5xl my-5 font-extrabold">
             venda online con samu.app
@@ -15,7 +15,7 @@
           </p>
           <div class="bg-white p-5 flex flex-col shadow-md mt-10">
             <h2 class="text-black text-lg font-xl uppercase font-extrabold">
-              Acceder a su cuenta
+              Recuperar Contraseña
             </h2>
             <div v-if="loading" class="flex mx-auto py-5">
               <spin-component />
@@ -36,7 +36,7 @@
                   }"
                 />
               </div>
-              <div class="mb-4">
+              <!-- <div class="mb-4">
                 <input
                   autocomplete="off"
                   v-model="formulario_login.password"
@@ -50,30 +50,17 @@
                     'border-4': error,
                   }"
                 />
-              </div>
+              </div> -->
 
               <alert-component v-if="error" :msg="msgError" />
 
-              <div class="my-4">
-                <router-link
-                  to="/recuperar-password"
-                  class="text-blue-500 bg-white font-bold border-0 py-4 focus:outline-none hover:text-purple-800"
-                  >¿Olvidaste tu contraseña?</router-link
-                >
-              </div>
-              <div class="container__auth-botones">
+              <div class="container__auth-botones mb-5">
                 <button
-                  class="w-auto mb-4 md:mb-0 uppercase text-white bg-black font-bold border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 text-lg"
+                  class="w-auto uppercase text-white bg-black font-bold border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 text-lg"
                   @click="validar"
                 >
-                  Ingresar
+                  Recuperar
                 </button>
-                <router-link
-                  to="/registro"
-                  class="uppercase text-center text-blue-500 bg-white font-bold border-0 py-2 px-6 focus:outline-none hover:text-purple-800"
-                >
-                  CREAR UNA NUEVA CUENTA
-                </router-link>
               </div>
             </div>
           </div>
@@ -90,7 +77,7 @@ import AlertComponent from "../../components/AlertComponent.vue";
 import SpinComponent from "../../components/SpinComponent.vue";
 
 export default {
-  name: "LoginScreen",
+  name: "RecuperarContraseñaScreen",
   components: {
     AuthLayout,
     AlertComponent,
@@ -98,17 +85,18 @@ export default {
   },
   data() {
     return {
+      ruta: "http://samu.test/api/",
       error: false,
       msgError: "",
       loading: false,
       formulario_login: {
         email: null,
-        password: null,
+        // password: null,
       },
     };
   },
   computed: {
-    ...mapState(["url"]),
+    ...mapState(["usuario", "token", "url"]),
   },
   methods: {
     ...mapMutations(["SET_USUARIO", "SET_TOKEN"]),
@@ -132,10 +120,10 @@ export default {
     validar() {
       if (
         this.formulario_login.email === null ||
-        this.formulario_login.password === null ||
-        this.formulario_login.email === "" ||
-        this.formulario_login.password === ""
+        this.formulario_login.email === ""
       ) {
+        // this.formulario_login.password === null ||
+        // this.formulario_login.password === ""
         this.loading = false;
         this.error = true;
         this.msgError = "Complete los campos porfavor";
@@ -155,20 +143,23 @@ export default {
   grid-template-columns: 1fr;
   align-items: center;
 }
-@media (min-width: 768px) {
-  .container__auth-botones {
-    grid-template-columns: 40% 60%;
-    align-items: center;
-  }
-}
 
-.hero {
+ .hero {
   position: relative;
-  height: calc(100vh + 40vh);
+  height: calc(100vh);
   overflow-x: hidden;
   overflow-y: hidden;
 }
+@media (min-width: 1280px) {
+  .hero {
+    position: relative;
+    height: calc(100vh - 132px);
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+}
 
+/*
 .hero-img {
   position: absolute;
   left: 0;
@@ -195,8 +186,6 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    /*padding-top: 100px;*/
-    /*margin-bottom: 70px;*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
@@ -211,5 +200,5 @@ export default {
     overflow-x: hidden;
     overflow-y: hidden;
   }
-}
+} */
 </style>

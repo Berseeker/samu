@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'JuanPi',
-            'email' => 'juan.alucard.02@gmail.com',
-            'telefono' => 9983208924,
-            'password' => Hash::make('Harimakenji01@'),
+            'name' => 'Arturo Saldivar',
+            'email' => 'damonbalam@gmail.com',
+            'telefono' => 9831820506,
+            'password' => Hash::make('pomada0405'),
             'rol_id' => 5,
             'created_at' => now(),
             'updated_at' => now()
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
 
         DB::table('teams')->insert([
             'user_id' => 1,
-            'name' => "JuanPi's Team",
+            'name' => "Damon's Team",
             'personal_team' => true,
             'created_at' => now(),
             'updated_at' => now()

@@ -8,15 +8,19 @@ use Inertia\Inertia;
 
 class AuthController extends Controller
 {
-    public function login()
+    public function indexView()
     {
-        return Inertia::render('Autenticacion/Login');
+        return view('index');
     }
 
-    public function registro()
-    {
-        return Inertia::render('Autenticacion/Registro');
-    }
-
+//    public function login()
+//    {
+//        return Inertia::render('Autenticacion/Login');
+//    }
+//
+//    public function registro()
+//    {
+//        return Inertia::render('Autenticacion/Registro');
+//    }
 
 }
