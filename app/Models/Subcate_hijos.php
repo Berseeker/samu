@@ -21,7 +21,7 @@ class Subcate_hijos extends Model
         'deleted_at'
     ];
 
-    public function subcategorias()
+    public function subcategoria()
     {
         return $this->belongsTo(Subcategoria::class,'subcategoria_id');
     }
