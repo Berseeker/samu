@@ -42,7 +42,7 @@ class RegisterController extends Controller
             'password.confirmed' => 'Es necesario que confirmes tu password',
             'password_confirmation.required' => 'Por favor confirma tu password',
             'password_confirmation.same' => 'Las contraseñas no concuerdan',
-            'rol.required' => 'Por favor especifica si eres medico o paciente'
+            'rol.required' => 'Por favor especifica si eres proveedor o cliente'
         ];
 
         $this->validate($request,$rules,$messages);
