@@ -14,6 +14,7 @@ use App\Http\Controllers\API\Direcciones\DireccionController;
 use App\Http\Controllers\API\Tiendas\TiendaController;
 use App\Http\Controllers\API\Categorias\CategoriaControler;
 use App\Http\Controllers\API\Subcategorias\SubcategoriaController;
+use App\Http\Controllers\API\Subcategorias\HijosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,8 @@ Route::get('categoria/{id}',[CategoriaControler::class,'show']);
 
 Route::get('subcategorias',[SubcategoriaController::class,'index']);
 Route::get('subcategoria/{id}',[SubcategoriaController::class,'show']);
-Route::get('subcategoria-child/{id}',[SubcategoriaController::class,'showChild']);
+Route::get('subcategorias-hijos',[HijosController::class,'index']);
+Route::get('subcategoria-hijo/{id}',[HijosController::class,'show']);
 
 Route::get('paises',[PaisController::class,'index']);
 Route::get('pais/{id}',[PaisController::class,'show']);
