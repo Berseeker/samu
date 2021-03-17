@@ -36,7 +36,7 @@ class SubcategoriaController extends Controller
 
     public function show($id)
     {
-        $subcategoria = Subcategoria::with('categoria')->findOrFail($id);
+        $subcategoria = Subcategoria::with('hijos')->findOrFail($id);
 
         return response()->json([
             'status' => 'success',
