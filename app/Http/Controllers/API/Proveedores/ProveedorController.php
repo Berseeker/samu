@@ -18,20 +18,16 @@ class ProveedorController extends Controller
     public function index()
     {
         $proveedores = Proveedor::all();
-        if($proveedores == null)
-        {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'No hay proveedores registrados todavia',
-                'data' => NULL,
-                'code' => 200
-            ],200);
-        }
+        $data = $proveedores;
+        $message = 'Se encontraron '.count($proveedores).' proveedores en la BD';
+        if($proveedores->isEmpty())
+            $data = null;
+        
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Se encontraron todos los proveedores',
-            'data' => $proveedores,
+            'message' => $message,
+            'data' => $data,
             'code' => 200
         ],200);
 
@@ -39,7 +35,7 @@ class ProveedorController extends Controller
 
     public function show($id)
     {
-        $proveedor = Proveedor::findOrFail($id);
+        $proveedor = Proveedor::with('direcciones')->findOrFail($id);
         return response()->json([
             'status' => 'success',
             'message' => 'Se encontro el proveedor solicitado',

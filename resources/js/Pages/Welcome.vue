@@ -132,6 +132,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -145,6 +146,12 @@
             canLogin: Boolean,
             canRegister: Boolean,
             laravelVersion: String,
-        }
+        },
+        created() {
+          window.Echo.channel('tienda-publicada')
+            .listen('TiendaRegisterEvent',(tienda)=>{
+              console.log(tienda);
+            });
+        },
     }
 </script>

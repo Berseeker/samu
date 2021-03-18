@@ -17,20 +17,16 @@ class ClienteController extends Controller
     public function index()
     {
         $clientes = Cliente::all();
-        if($clientes == null)
-        {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'No hay clientes registrados todavia',
-                'data' => NULL,
-                'code' => 200
-            ],200);
-        }
+        $data = $clientes;
+        $message = 'Se encontraron '.count($clientes).' clientes en la BD';
+        if($clientes->isEmpty())
+            $data = null;
+        
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Se encontraron todos los clientes',
-            'data' => $clientes,
+            'message' => $message,
+            'data' => $data,
             'code' => 200
         ],200);
 
@@ -38,7 +34,7 @@ class ClienteController extends Controller
 
     public function show($id)
     {
-        $cliente = Cliente::findOrFail($id);
+        $cliente = Cliente::with('direcciones')->findOrFail($id);
         return response()->json([
             'status' => 'success',
             'message' => 'Se encontro el cliente solicitado',

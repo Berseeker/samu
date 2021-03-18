@@ -4,32 +4,28 @@ namespace App\Http\Controllers\API\Divisas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+
 
 use App\Models\Divisa;
+use App\Models\Pais;
 
 class DivisaController extends Controller
 {
     public function index()
     {
         $divisas = Divisa::all();
-
-        if($divisas == null)
-        {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'No hay divisas registradas',
-                'data' => null,
-                'code' => 200
-            ],200);
-        }else{
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Busqueda completa',
-                'data' => $divisas,
-                'code' => 200
-            ],200);
-        }
+        $data = null;
+        $message = 'Se encontraron '.count($divisas).' divisas en la BD';
+        if(!$divisas->isEmpty())
+            $data = $divisas;
+               
+        return response()->json([
+            'status' => 'success',
+            'message' => $message,
+            'data' => $data,
+            'code' => 200
+        ],200);
     }
 
     public function show($id)
@@ -59,8 +55,18 @@ class DivisaController extends Controller
 
         $this->validate($request,$rules,$messages);
 
+        $prev = Divisa::where('moneda',$request->moneda)->first();
+        if($prev != NULL){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Esta divisa ya se encuentra registrada',
+                'data' => NULL,
+                'code' => 202
+            ],202);
+        }
+            
         $divisa = new Divisa();
-        $divisa->moneda = $request->moneda;
+        $divisa->moneda = Str::upper($request->moneda);
         $divisa->valor = $request->valor;
         $divisa->save();
 
@@ -68,8 +74,8 @@ class DivisaController extends Controller
             'status' => 'success',
             'message' => 'La divisa se creo exitosamente',
             'data' => $divisa,
-            'code' => 200
-        ],200);
+            'code' => 201
+        ],201);
     }
 
     public function update(Request $request,$id)
@@ -114,12 +120,56 @@ class DivisaController extends Controller
         ],200);
     }
 
-    public function syncData()
+    public function restore($id)
     {
-        $data = Http::get('https://restcountries.eu/rest/v2/all');
+        Divisa::withTrashed()
+            ->where('id', $id)
+            ->restore();
 
-        $response = $data->json();
-
-        dd($response);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'La divisa se restauró correctamente',
+                'data' => null,
+                'code' => 200
+            ],200);
     }
+
+    public function import()
+    {
+        $paises = Pais::all();
+        $pointer = 0;
+        $count = 0;
+        foreach($paises as $pais)
+        {
+            $currency = json_decode($pais->monedas);
+            $prev = Divisa::where('alpha_code',$pais->alpha_code)->get();
+            if($prev->isEmpty())
+            {
+                $divisa = new Divisa();
+                $divisa->moneda = ($currency[0]->code == null) ? 'USD' : $currency[0]->code;
+                $divisa->pais = $pais->nombre;
+                $divisa->bandera = $pais->bandera;
+                $divisa->alpha_code = $pais->alpha_code;
+                $divisa->save();
+                $count++;
+            }
+            else
+            {
+                $prev[0]->moneda = ($currency[0]->code == null) ? 'USD' : $currency[0]->code;
+                $prev[0]->pais = $pais->nombre;
+                $prev[0]->bandera = $pais->bandera;
+                $prev[0]->alpha_code = $pais->alpha_code;
+                $prev[0]->save();
+                $pointer++;
+            } 
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se crearon '.$count.' divisas y se actualizaron '.$pointer.' divisas',
+            'data' => NULL,
+            'code' => 200
+        ],200);
+    }
+
 }

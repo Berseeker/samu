@@ -31,4 +31,9 @@ class Proveedor extends Model
             $query->where('rol_id', 1);
         });
     }
+
+    public function direcciones()
+    {
+        return $this->hasMany(Direccion::class,'user_id');
+    }
 }
