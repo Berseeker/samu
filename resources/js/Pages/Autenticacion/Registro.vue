@@ -70,7 +70,7 @@
                   @click="validar"
                   class="uppercase text-white bg-black font-bold border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 text-lg"
                 >
-                  Ingresar
+                  Crear
                 </button>
                 <div class="flex md:block text-right font-bold mt-5 md:mt-0">
                   <p class="mr-3 md:mr-0">¿Ya tienes una cuenta?</p>
@@ -130,7 +130,7 @@ export default {
       } else {
         this.error = false;
         this.msgError = "";
-        this.$router.push("/control-panel");
+        this.$router.push("/registro-proceso");
       }
     },
   },

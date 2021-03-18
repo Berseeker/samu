@@ -1,10 +1,10 @@
 <template>
-  <div style="width: 100%">
+  <div  class="max-h-screen">
     <header class="bg-cyan">
       <div class="container mx-auto py-4 md:flex md:py-2">
         <router-link to="/">
           <img
-            src="assets/brand/logo.png"
+            src="../assets/brand/logo.png"
             class="logo mx-auto md:mx-0"
             alt="Logo Samu"
           />
@@ -12,52 +12,60 @@
       </div>
     </header>
 
-    <slot></slot>
+    <main class="bg-gray-200">
+      <slot></slot>
+    </main>
 
     <footer class="text-black bg-cyan">
       <!--version desktop-->
       <div
         class="hidden container mx-auto md:flex md:flex-row md:justify-between py-3 flex-col justify-center items-center"
       >
-        <a class="items-center uppercase font-extrabold md:mx-0 texto-100">
+        <span class="items-center uppercase font-extrabold md:mx-0 texto-100">
           {{ year }} samu.<span class="font-light"
             >Todos los derechos reservados &copy;</span
           >
-        </a>
+        </span>
         <nav class="items-center texto-100">
-          <a
+          <router-link
+            to="/condiciones-de-uso"
             class="cursor-pointer uppercase mr-5 md:hover:text-white hover:text-gray-500"
-            >condiciones de uso</a
+            >condiciones de uso</router-link
           >
-          <a
+          <router-link
+            to="/aviso-de-privacidad"
             class="cursor-pointer uppercase mr-5 md:hover:text-white hover:text-gray-500"
-            >aviso de privacidad</a
+            >aviso de privacidad</router-link
           >
-          <a
+          <router-link
+            to="/ayuda"
             class="cursor-pointer uppercase mr-5 md:hover:text-white hover:text-gray-500"
-            >ayuda</a
+            >ayuda</router-link
           >
         </nav>
       </div>
       <!--Version Mobile-->
       <div class="flex flex-col mx-auto text-center md:hidden">
-        <a class="items-center uppercase font-extrabold texto-100 py-5">
+        <span class="items-center uppercase font-extrabold texto-100 py-5">
           {{ year }} samu.<span class="font-light"
             >Todos los derechos reservados &copy;</span
           >
-        </a>
+        </span>
         <nav class="items-center texto-100 w-full bg-gray-200 py-3">
-          <a
+          <router-link
+            to="/condiciones-de-uso"
             class="cursor-pointer uppercase mr-3 md:hover:text-white hover:text-gray-500"
-            >condiciones de uso</a
+            >condiciones de uso</router-link
           >
-          <a
+          <router-link
+            to="/aviso-de-privacidad"
             class="cursor-pointer uppercase mr-3 md:hover:text-white hover:text-gray-500"
-            >aviso de privacidad</a
+            >aviso de privacidad</router-link
           >
-          <a
+          <router-link
+            to="/ayuda"
             class="cursor-pointer uppercase mr-3 md:hover:text-white hover:text-gray-500"
-            >ayuda</a
+            >ayuda</router-link
           >
         </nav>
       </div>
@@ -90,7 +98,10 @@ export default {
     font-size: 1.2rem;
   }
   footer {
-    position: absolute;
+    /* position: absolute; */
+    /* bottom: 0; */
+    /* width: 100%; */
+    position: fixed;
     bottom: 0;
     width: 100%;
   }

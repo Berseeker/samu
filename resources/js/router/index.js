@@ -3,9 +3,11 @@ import VueRouter from "vue-router";
 
 import Login from "../Pages/Autenticacion/Login";
 import Registro from "../Pages/Autenticacion/Registro";
-import RecuperarPassword from "../Pages/Autenticacion/RecuperarPassword.vue";
 
 import ControlPanel from "../Pages/Panel/Index";
+
+import Condiciones from "../Pages/Otros/Condiciones.vue"
+
 
 Vue.use(VueRouter);
 
@@ -25,6 +27,14 @@ const routes = [
         component: Registro
     },
     {
+        path: "/registro-proceso",
+        name: "RegistroProceso",
+        component: () =>
+            import(
+                /* webpackChunkName: "main/registro-proceso" */ "../Pages/Autenticacion/RegistroProceso.vue"
+            )
+    },
+    {
         path: "/recuperar-password",
         name: "RecuperarPassword",
         component: () =>
@@ -40,7 +50,29 @@ const routes = [
         // component: () => import(
         //     /* webpackChunkName: "js/main/control-panel" */ "../Pages/Panel/Index"
         //     )
-    }
+    },
+    {
+        path: "/condiciones-de-uso",
+        name: "Condiciones",
+        component: Condiciones
+
+    },
+    {
+        path: "/aviso-de-privacidad",
+        name: "Aviso",
+        component: () =>
+            import(
+                /* webpackChunkName: "js/main/aviso-de-privacidad" */ "../Pages/Otros/AvisoPrivacidad.vue"
+            )
+    },
+    {
+        path: "/ayuda",
+        name: "Ayuda",
+        component: () =>
+            import(
+                /* webpackChunkName: "js/main/ayuda" */ "../Pages/Otros/Ayuda.vue"
+            )
+    },
 ];
 
 const router = new VueRouter({

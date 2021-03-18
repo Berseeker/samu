@@ -7,7 +7,16 @@ export default new Vuex.Store({
     state: {
         url: 'http://samu.test/api/',
         usuario: {},
-        token: ''
+        token: '',
+        formulario_registro:{
+            name:'',
+            email:'',
+            password:'',
+            password_confirmation:'',
+            tienda_nombre:'',
+            categoria_id:'',
+
+        }
     },
     mutations: {
         SET_USUARIO(state, payload) {
