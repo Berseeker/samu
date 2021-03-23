@@ -111,7 +111,7 @@ export default {
     ...mapState(["url"]),
   },
   methods: {
-    ...mapMutations(["SET_USUARIO", "SET_TOKEN"]),
+    ...mapMutations(["SET_USUARIO", "SET_TOKEN", "SET_AUTH"]),
     login() {
       this.loading = true;
       axios
@@ -119,7 +119,8 @@ export default {
         .then((response) => {
           if (response.data.code === 200) {
             this.SET_USUARIO(response.data.data[0]);
-            this.SET_TOKEN(response.data.token);
+            this.SET_TOKEN(`Bearer ${response.data.token}`);
+            this.SET_AUTH(true);
             this.$router.push("/control-panel");
           }
         })

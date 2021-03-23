@@ -1,10 +1,10 @@
 <template>
-  <div  class="max-h-screen">
+  <div class="min-h-screen">
     <header class="bg-cyan">
       <div class="container mx-auto py-4 md:flex md:py-2">
         <router-link to="/">
           <img
-            src="../assets/brand/logo.png"
+            src="assets/brand/logo.png"
             class="logo mx-auto md:mx-0"
             alt="Logo Samu"
           />

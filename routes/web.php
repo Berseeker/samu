@@ -32,7 +32,7 @@ use App\Http\Controllers\WEB\Auth\VerifyEmailController;
 //});
 
 
-Route::get('{any?}', [AuthController::class,'indexView']);
+Route::get('{any?}', [AuthController::class, 'indexView'])->where('any', '.*');
 //Route::get('/registro', [AuthController::class,'registro'])->name('registro');
 //Route::get('/panel', [PanelController::class,'index'])->name('panel.index');
 

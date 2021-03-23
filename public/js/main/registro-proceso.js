@@ -81,6 +81,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Condiciones",
@@ -197,7 +199,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "w-full max-w-2xl mx-10 md:mx-0  mt-20 animate__animated animate__fadeInUp"
+              "w-full max-w-2xl mx-10 md:mx-0 mt-20 animate__animated animate__fadeInUp"
           },
           [
             _c(
@@ -254,10 +256,10 @@ var render = function() {
                               "border-4": _vm.error
                             },
                             attrs: {
-                              type: "email",
-                              id: "email",
-                              name: "email",
-                              placeholder: "E-mail",
+                              type: "nombre_tienda",
+                              id: "nombre_tienda",
+                              name: "nombre_tienda",
+                              placeholder: "Nombre de Tienda",
                               autocomplete: "off"
                             },
                             domProps: { value: _vm.formulario_login.email },

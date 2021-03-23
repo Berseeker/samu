@@ -2,6 +2,10 @@
     "/js/main.js": "/js/main.js",
     "/js/main/registro-proceso.js": "/js/main/registro-proceso.js",
     "/js/js/main/recuperar-password.js": "/js/js/main/recuperar-password.js",
+    "/js/PanelPage.js": "/js/PanelPage.js",
+    "/js/OrdenesPage.js": "/js/OrdenesPage.js",
+    "/js/ProductosPage.js": "/js/ProductosPage.js",
+    "/js/InformesPage.js": "/js/InformesPage.js",
     "/js/js/main/aviso-de-privacidad.js": "/js/js/main/aviso-de-privacidad.js",
     "/js/js/main/ayuda.js": "/js/js/main/ayuda.js",
     "/css/app.css": "/css/app.css"

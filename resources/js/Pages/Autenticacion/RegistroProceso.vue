@@ -2,7 +2,9 @@
   <AuthLayout>
     <div class="container mx-auto overflow-y-hidden">
       <div class="flex flex-wrap justify-center">
-        <div class="w-full max-w-2xl mx-10 md:mx-0  mt-20 animate__animated animate__fadeInUp">
+        <div
+          class="w-full max-w-2xl mx-10 md:mx-0 mt-20 animate__animated animate__fadeInUp"
+        >
           <h1 class="uppercase text-black text-5xl my-5 font-extrabold">
             COMPLETE EL FORMULARIO
           </h1>
