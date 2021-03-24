@@ -137,7 +137,8 @@ router.beforeEach((to, from, next) => {
     } else if (
         to.name === "Login" ||
         to.name === "Registro" ||
-        to.name === "RegistroProceso"
+        to.name === "RegistroProceso" ||
+        to.name === "RecuperarPassword"
     ) {
         if (auth) {
             next({ path: "/control-panel" });

@@ -2338,8 +2338,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _Layouts_AuthLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AuthLayout */ "./resources/js/Layouts/AuthLayout.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2415,15 +2414,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "PanelIndex",
-  components: {
-    AuthLayout: _Layouts_AuthLayout__WEBPACK_IMPORTED_MODULE_0__.default
+  data: function data() {
+    return {
+      isActive: false
+    };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)(["usuario", "token", "url"])),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapMutations)(["SET_AUTH"])), {}, {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)(["usuario", "token", "url"])),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapMutations)(["SET_AUTH"])), {}, {
     logout: function logout() {
       var _this = this;
 
@@ -2440,6 +2442,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.$router.push("/login");
         }
       });
+    },
+    activarConfiguracion: function activarConfiguracion() {
+      this.isActive = !this.isActive;
     }
   })
 });
@@ -2738,7 +2743,7 @@ router.beforeEach(function (to, from, next) {
     } else {
       next();
     }
-  } else if (to.name === "Login" || to.name === "Registro" || to.name === "RegistroProceso") {
+  } else if (to.name === "Login" || to.name === "Registro" || to.name === "RegistroProceso" || to.name === "RecuperarPassword") {
     if (auth) {
       next({
         path: "/control-panel"
@@ -2894,7 +2899,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.active-item[data-v-24d884bc] {\n  color: white;\n  background-color: #06b0d7;\n}\n.nav-item[data-v-24d884bc]:hover {\n  color: white;\n  background-color: #06b0d7;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.active-item[data-v-24d884bc] {\n  color: white;\n  background-color: #06b0d7;\n}\n.active-dropdown[data-v-24d884bc] {\n  color: white;\n  background-color: rgba(156, 163, 175, 1);\n}\n.nav-item[data-v-24d884bc]:hover {\n  color: white;\n  background-color: #06b0d7;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22255,17 +22260,21 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "flex" }, [
-    _c("aside", { staticClass: "w-3/12" }, [
+    _c("aside", { staticClass: "w-1/5" }, [
       _c(
         "div",
         { staticClass: "bg-cyan" },
         [
-          _c("router-link", { staticClass: "mx-auto", attrs: { to: "/" } }, [
-            _c("img", {
-              staticClass: "logo mx-auto",
-              attrs: { src: "/assets/brand/logo.png", alt: "Logo Samu" }
-            })
-          ])
+          _c(
+            "router-link",
+            { staticClass: "mx-auto", attrs: { to: "/control-panel" } },
+            [
+              _c("img", {
+                staticClass: "logo mx-auto",
+                attrs: { src: "/assets/brand/logo.png", alt: "Logo Samu" }
+              })
+            ]
+          )
         ],
         1
       ),
@@ -22340,30 +22349,26 @@ var render = function() {
           _vm._v("Configuración")
         ]),
         _vm._v(" "),
-        _c(
-          "nav",
-          { staticClass: "flex flex-col w-full" },
-          [
-            _c(
-              "router-link",
-              {
-                staticClass:
-                  "block font-semibold cursor-pointer nav-item py-2 px-6",
-                attrs: { to: "/control-panel" }
-              },
-              [_vm._v("Configuración")]
-            )
-          ],
-          1
-        )
+        _c("nav", { staticClass: "flex flex-col w-full" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "block text-left font-semibold cursor-pointer nav-item py-2 px-6 focus:outline-none",
+              class: { "active-dropdown": _vm.isActive },
+              on: { click: _vm.activarConfiguracion }
+            },
+            [_vm._v("\n          Configuración\n        ")]
+          )
+        ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "fixed bottom-0 w-3/12 flex justify-center" }, [
+      _c("div", { staticClass: "fixed bottom-0 w-1/5 flex justify-center" }, [
         _c(
           "button",
           {
             staticClass:
-              "mx-auto bg-white p-3 mb-20 font-bold focus:outline-none hover:text-purple-800",
+              "mx-auto bg-white p-3 mb-20 font-bold hover:text-purple-800 focus:outline-none",
             on: {
               click: function($event) {
                 return _vm.logout()

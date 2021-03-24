@@ -1,8 +1,8 @@
 <template>
   <div class="flex">
-    <aside class="w-3/12">
+    <aside class="w-1/5">
       <div class="bg-cyan">
-        <router-link to="/" class="mx-auto">
+        <router-link to="/control-panel" class="mx-auto">
           <img
             src="/assets/brand/logo.png"
             class="logo mx-auto"
@@ -45,17 +45,19 @@
       <div>
         <span class="block px-6 font-light mt-5">Configuración</span>
         <nav class="flex flex-col w-full">
-          <router-link
-            to="/control-panel"
-            class="block font-semibold cursor-pointer nav-item py-2 px-6"
-            >Configuración</router-link
+          <button
+            @click="activarConfiguracion"
+            class="block text-left font-semibold cursor-pointer nav-item py-2 px-6 focus:outline-none"
+            :class="{ 'active-dropdown': isActive }"
           >
+            Configuración
+          </button>
         </nav>
       </div>
-      <div class="fixed bottom-0 w-3/12 flex justify-center">
+      <div class="fixed bottom-0 w-1/5 flex justify-center">
         <button
           @click="logout()"
-          class="mx-auto bg-white p-3 mb-20 font-bold focus:outline-none hover:text-purple-800"
+          class="mx-auto bg-white p-3 mb-20 font-bold hover:text-purple-800 focus:outline-none"
         >
           Cerrar sesión
         </button>
@@ -69,10 +71,13 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import AuthLayout from "@/Layouts/AuthLayout";
 export default {
   name: "PanelIndex",
-  components: { AuthLayout },
+  data() {
+    return {
+      isActive: false,
+    };
+  },
   computed: {
     ...mapState(["usuario", "token", "url"]),
   },
@@ -97,6 +102,9 @@ export default {
           }
         });
     },
+    activarConfiguracion() {
+      this.isActive = !this.isActive;
+    },
   },
 };
 </script>
@@ -105,6 +113,10 @@ export default {
 .active-item {
   color: white;
   background-color: #06b0d7;
+}
+.active-dropdown {
+  color: white;
+  background-color: rgba(156, 163, 175, 1);
 }
 .nav-item:hover {
   color: white;
