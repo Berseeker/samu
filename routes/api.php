@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\VerifyEmailController;
+use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Clientes\ClienteController;
 use App\Http\Controllers\API\Proveedores\ProveedorController;
 use App\Http\Controllers\API\Divisas\DivisaController;
@@ -29,6 +30,8 @@ use App\Http\Controllers\API\Subcategorias\HijosController;
 
 Route::post('create-user',[RegisterController::class,'store']);
 Route::post('login',[LoginController::class,'index']);
+Route::post('request-new-password',[ResetPasswordController::class,'index']);
+Route::post('reset-password',[ResetPasswordController::class,'restore']);
 Route::middleware('auth:sanctum')->get('verify-email',[VerifyEmailController::class,'index']);
 
 //ENDPOINTS PARA LLENAR LA BD YA SEA DE UN API O ARCHIVOS DE EXCEL -- SIEMPRE EJECUTARLOS AL HACER GIT CLONE 

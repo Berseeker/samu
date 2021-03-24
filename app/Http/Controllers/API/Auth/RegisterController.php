@@ -57,8 +57,8 @@ class RegisterController extends Controller
         $user->name = $request->nombre;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->telefono = $request->telefono;
-        $user->foto_perfil = $request->foto_perfil;
+        $user->telefono = 00000000;
+        $user->foto_perfil = null;
         $user->rol_id = ($request->rol == 'proveedor') ? 1 : 3;
         $user->save();
 
@@ -79,11 +79,11 @@ class RegisterController extends Controller
             $tienda->nombre = $request->tienda_nombre;
             $tienda->descripcion = $request->tienda_descripcion; // opcional
             $tienda->user_id = $user->id;
-            $tienda->categoria_id = $categoria->id; 
+            $tienda->categoria_id = $categoria->id;
             $tienda->divisa_id = $divisa->id;
             $tienda->save();
 
-            $direccion = new Direccion();
+            /*$direccion = new Direccion();
             $direccion->celular = $request->celular;
             $direccion->ciudad = $request->ciudad;
             $direccion->estado = $request->estado;
@@ -93,7 +93,7 @@ class RegisterController extends Controller
             $direccion->cp = $request->cp;
             $direccion->tienda_id = $tienda->id;
             $direccion->pais_id = $request->pais_id;
-            $direccion->save();
+            $direccion->save();*/
         }
         if($request->rol == 'cliente')
         {
