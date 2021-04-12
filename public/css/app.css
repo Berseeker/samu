@@ -32721,33 +32721,45 @@ select {
 /* Custom */
 
 @font-face {
-  font-family: "Along Sans Extra Bold";
+  font-family: 'Cairo Black';
 
-  src: url("/fonts/Along-Sans-Extra-Bold.ttf");
+  src: url("/fonts/Cairo-Black.ttf");
 }
 
 @font-face {
-  font-family: "Along Sans Semi Bold";
+  font-family: 'Cairo Bold';
 
-  src: url("/fonts/Along-Sans-Semi-Bold.ttf");
+  src: url("/fonts/Cairo-Bold.ttf");
 }
 
 @font-face {
-  font-family: "Along Sans Medium";
+  font-family: 'Cairo Extra Light';
 
-  src: url("/fonts/Along-Sans-Medium.otf");
+  src: url("/fonts/Cairo-ExtraLight.ttf");
 }
 
 @font-face {
-  font-family: "LeoRoundedPro Bold";
+  font-family: 'Cairo Light';
 
-  src: url("/fonts/LeoRoundedPro-Bold.otf");
+  src: url("/fonts/Cairo-Light.ttf");
 }
 
 @font-face {
-  font-family: "LeoRoundedPro Medium";
+  font-family: 'Cairo Light';
 
-  src: url("/fonts/LeoRoundedPro-Medium.otf");
+  src: url("/fonts/Cairo-Light.ttf");
+}
+
+@font-face {
+  font-family: 'Cairo Regular';
+
+  src: url("/fonts/Cairo-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Cairo Semi Bold';
+
+  src: url("/fonts/Cairo-SemiBold.ttf");
 }
 
 :root {
@@ -32773,25 +32785,25 @@ select {
   background-color: var(--main-color-cyan);
 }
 
-.texto-along-extra-bold {
-  font-family: "Along Sans Extra Bold";
+/* .texto-along-extra-bold {
+    font-family: "Along Sans Extra Bold";
 }
 
 .texto-along-semi-bold {
-  font-family: "Along Sans Semi Bold";
+    font-family: "Along Sans Semi Bold";
 }
 
 .texto-along-medium {
-  font-family: "Along Sans Medium";
+    font-family: "Along Sans Medium";
 }
 
 .texto-leo-bold {
-  font-family: "LeoRoundedPro Bold";
+    font-family: "LeoRoundedPro Bold";
 }
 
 .texto-leo-medium {
-  font-family: "LeoRoundedPro Medium";
-}
+    font-family: "LeoRoundedPro Medium";
+} */
 
 .texto-color-amarillo {
   color: var(--main-color-amarillo);

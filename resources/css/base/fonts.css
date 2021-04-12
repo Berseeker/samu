@@ -1,21 +1,34 @@
 @font-face {
-    font-family: "Along Sans Extra Bold";
-    src: url("/fonts/Along-Sans-Extra-Bold.ttf");
-}
-@font-face {
-    font-family: "Along Sans Semi Bold";
-    src: url("/fonts/Along-Sans-Semi-Bold.ttf");
-}
-@font-face {
-    font-family: "Along Sans Medium";
-    src: url("/fonts/Along-Sans-Medium.otf");
-}
-@font-face {
-    font-family: "LeoRoundedPro Bold";
-    src: url("/fonts/LeoRoundedPro-Bold.otf");
-}
-@font-face {
-    font-family: "LeoRoundedPro Medium";
-    src: url("/fonts/LeoRoundedPro-Medium.otf");
+    font-family: 'Cairo Black';
+    src: url("/fonts/Cairo-Black.ttf");
 }
 
+@font-face {
+    font-family: 'Cairo Bold';
+    src: url("/fonts/Cairo-Bold.ttf");
+}
+
+@font-face {
+    font-family: 'Cairo Extra Light';
+    src: url("/fonts/Cairo-ExtraLight.ttf");
+}
+
+@font-face {
+    font-family: 'Cairo Light';
+    src: url("/fonts/Cairo-Light.ttf");
+}
+
+@font-face {
+    font-family: 'Cairo Light';
+    src: url("/fonts/Cairo-Light.ttf");
+}
+
+@font-face {
+    font-family: 'Cairo Regular';
+    src: url("/fonts/Cairo-Regular.ttf");
+}
+
+@font-face {
+    font-family: 'Cairo Semi Bold';
+    src: url("/fonts/Cairo-SemiBold.ttf");
+}
