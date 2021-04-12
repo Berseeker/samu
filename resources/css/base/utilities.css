@@ -1,0 +1,13 @@
+/* LINKS */
+.active-item {
+    color: white;
+    background-color: var(--main-color-cyan);
+}
+.active-dropdown {
+    color: white;
+    background-color: rgba(156, 163, 175, 1);
+}
+.nav-item:hover {
+    color: white;
+    background-color: var(--main-color-cyan);
+}

@@ -57,7 +57,7 @@ const routes = [
                 meta: { requiresAuth: true },
                 component: () =>
                     import(
-                        /* webpackChunkName: "PanelPage" */ "../Pages/Paneles/Panel.vue"
+                        /* webpackChunkName: "PanelPage" */ "@/Pages/Paneles/Panel.vue"
                     )
             },
             {
@@ -66,7 +66,7 @@ const routes = [
                 meta: { requiresAuth: true },
                 component: () =>
                     import(
-                        /* webpackChunkName: "OrdenesPage" */ "../Pages/Paneles/Ordenes.vue"
+                        /* webpackChunkName: "OrdenesPage" */ "@/Pages/Paneles/Ordenes.vue"
                     )
             },
             {
@@ -75,7 +75,7 @@ const routes = [
                 meta: { requiresAuth: true },
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProductosPage" */ "../Pages/Paneles/Productos.vue"
+                        /* webpackChunkName: "ProductosPage" */ "@/Pages/Paneles/Productos.vue"
                     )
             },
             {
@@ -84,7 +84,7 @@ const routes = [
                 meta: { requiresAuth: true },
                 component: () =>
                     import(
-                        /* webpackChunkName: "InformesPage" */ "../Pages/Paneles/Informes.vue"
+                        /* webpackChunkName: "InformesPage" */ "@/Pages/Paneles/Informes.vue"
                     )
             }
         ]

@@ -19,11 +19,6 @@
 }
 
 @font-face {
-    font-family: 'Cairo Light';
-    src: url("/fonts/Cairo-Light.ttf");
-}
-
-@font-face {
     font-family: 'Cairo Regular';
     src: url("/fonts/Cairo-Regular.ttf");
 }

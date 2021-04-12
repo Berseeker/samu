@@ -6,7 +6,7 @@
         <div
           class="xl:w-1/3 lg:w-1/2 md:w-1/2 md:ml-auto lg:ml-auto w-full md:mt-0 relative z-10 animate__animated animate__fadeInRight"
         >
-          <h1 class="uppercase text-black text-5xl my-5 font-extrabold">
+          <h1 class="uppercase text-black text-5xl my-5 texto-cairo-bold">
             venda online con samu.app
           </h1>
           <p class="uppercase text-black text-xl">
@@ -14,7 +14,9 @@
             assumenda
           </p>
           <div class="bg-white p-5 flex flex-col shadow-md mt-10">
-            <h2 class="text-black text-lg font-xl uppercase font-extrabold">
+            <h2
+              class="text-black text-lg font-xl uppercase texto-cairo-semi-bold"
+            >
               Acceder a su cuenta
             </h2>
             <div v-if="loading" class="flex mx-auto py-5">
@@ -57,20 +59,20 @@
               <div class="my-4">
                 <router-link
                   to="/recuperar-password"
-                  class="text-blue-500 bg-white font-bold border-0 py-4 focus:outline-none hover:text-purple-800"
+                  class="texto-color-cyan texto-hover-magenta border-0 py-4 texto-cairo-bold"
                   >¿Olvidaste tu contraseña?</router-link
                 >
               </div>
               <div class="container__auth-botones">
                 <button
-                  class="w-auto mb-4 md:mb-0 uppercase text-white bg-black font-bold border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 text-lg"
+                  class="w-auto mb-4 md:mb-0 uppercase text-white bg-black border-0 py-2 px-6 text-lg texto-hover-amarillo texto-cairo-bold"
                   @click="validar"
                 >
                   Ingresar
                 </button>
                 <router-link
                   to="/registro"
-                  class="uppercase text-center text-blue-500 bg-white font-bold border-0 py-2 px-6 focus:outline-none hover:text-purple-800"
+                  class="uppercase text-center texto-color-cyan texto-hover-magenta border-0 py-2 px-6  texto-cairo-bold"
                 >
                   CREAR UNA NUEVA CUENTA
                 </router-link>

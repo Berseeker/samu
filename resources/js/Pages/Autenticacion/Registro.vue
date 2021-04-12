@@ -6,16 +6,18 @@
         <div
           class="xl:w-1/3 lg:w-1/2 md:w-1/2 md:ml-auto lg:ml-auto w-full md:mt-0 relative z-10 animate__animated animate__fadeInRight"
         >
-          <h1 class="text-black text-5xl uppercase my-5 font-extrabold">
+          <h1 class="uppercase text-black text-5xl my-5 texto-cairo-bold">
             ¡Comience con una cuenta
-            <span class="texto-color-cyan">GRATUITA!</span>
+            <span class="texto-color-cyan texto-cairo-bold">GRATUITA!</span>
           </h1>
           <p class="uppercase text-black text-xl">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
             assumenda
           </p>
           <div class="bg-white p-5 mt-10 flex flex-col shadow-md">
-            <h2 class="text-black text-lg font-xl uppercase font-extrabold">
+            <h2
+              class="text-black text-lg font-xl uppercase texto-cairo-semi-bold"
+            >
               Crear cuenta
             </h2>
             <div v-if="loading" class="flex mx-auto py-5">
@@ -68,15 +70,15 @@
               <div class="container__auth-botones">
                 <button
                   @click="validar"
-                  class="uppercase text-white bg-black font-bold border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 text-lg"
+                  class="uppercase text-white bg-black border-0 py-2 px-6 text-lg texto-cairo-bold texto-hover-amarillo"
                 >
                   Crear
                 </button>
-                <div class="flex md:block text-right font-bold mt-5 md:mt-0">
+                <div class="flex md:block text-right texto-cairo-bold mt-5 md:mt-0">
                   <p class="mr-3 md:mr-0">¿Ya tienes una cuenta?</p>
                   <router-link
                     to="/login"
-                    class="texto-color-cyan hover:text-purple-800"
+                    class="texto-color-cyan texto-cairo-bold texto-hover-magenta"
                     >Iniciar Sesión</router-link
                   >
                 </div>

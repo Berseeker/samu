@@ -1,22 +1,22 @@
-/* .texto-along-extra-bold {
-    font-family: "Along Sans Extra Bold";
+.texto-cairo-black {
+    font-family: "Cairo Black"!important;
 }
 
-.texto-along-semi-bold {
-    font-family: "Along Sans Semi Bold";
+.texto-cairo-bold {
+    font-family: "Cairo Bold"!important;
 }
 
-.texto-along-medium {
-    font-family: "Along Sans Medium";
+.texto-cairo-semi-bold {
+    font-family: "Cairo Semi Bold"!important;
 }
 
-.texto-leo-bold {
-    font-family: "LeoRoundedPro Bold";
+.texto-cairo-extra-light {
+    font-family: "Cairo Extra Light"!important;
 }
 
-.texto-leo-medium {
-    font-family: "LeoRoundedPro Medium";
-} */
+.texto-cairo-light {
+    font-family: "Cairo Light"!important;
+}
 
 .texto-color-amarillo {
     color: var(--main-color-amarillo);
@@ -34,5 +34,18 @@
     color: var(--main-color-cyan);
 }
 
+.texto-hover-magenta:hover {
+    color: var(--main-color-magenta);
+}
 
+.texto-hover-amarillo:hover {
+    color: var(--main-color-amarillo);
+}
 
+.texto-hover-morado:hover {
+    color: var(--main-color-morado);
+}
+
+.texto-hover-cyan:hover {
+    color: var(--main-color-cyan);
+}

@@ -32745,12 +32745,6 @@ select {
 }
 
 @font-face {
-  font-family: 'Cairo Light';
-
-  src: url("/fonts/Cairo-Light.ttf");
-}
-
-@font-face {
   font-family: 'Cairo Regular';
 
   src: url("/fonts/Cairo-Regular.ttf");
@@ -32769,41 +32763,105 @@ select {
   --main-color-cyan: #06b0d7;
 }
 
+*, body {
+  font-family: "Cairo Regular", sans-serif!important;
+}
+
+/* ! FONDOS */
+
 .bg-amarillo{
   background-color: var(--main-color-amarillo);
+  transition: 0.3s all ease-in;
 }
 
 .bg-magenta{
   background-color: var(--main-color-magenta);
+  transition: 0.3s all ease-in;
 }
 
 .bg-morado{
   background-color: var(--main-color-morado);
+  transition: 0.3s all ease-in;
 }
 
 .bg-cyan{
   background-color: var(--main-color-cyan);
+  transition: 0.3s all ease-in;
 }
 
-/* .texto-along-extra-bold {
-    font-family: "Along Sans Extra Bold";
+.bg-hover-amarillo:hover{
+  background-color: var(--main-color-amarillo);
 }
 
-.texto-along-semi-bold {
-    font-family: "Along Sans Semi Bold";
+.bg-hover-magenta:hover{
+  background-color: var(--main-color-magenta);
 }
 
-.texto-along-medium {
-    font-family: "Along Sans Medium";
+.bg-hover-morado:hover{
+  background-color: var(--main-color-morado);
 }
 
-.texto-leo-bold {
-    font-family: "LeoRoundedPro Bold";
+.bg-hover-cyan:hover{
+  background-color: var(--main-color-cyan);
 }
 
-.texto-leo-medium {
-    font-family: "LeoRoundedPro Medium";
-} */
+/* ! BORDES */
+
+.border-amarillo{
+  border-color: var(--main-color-amarillo);
+  transition: 0.3s all ease-in;
+}
+
+.border-magenta{
+  border-color: var(--main-color-magenta);
+  transition: 0.3s all ease-in;
+}
+
+.border-morado{
+  border-color: var(--main-color-morado);
+  transition: 0.3s all ease-in;
+}
+
+.border-cyan{
+  border-color: var(--main-color-cyan);
+  transition: 0.3s all ease-in;
+}
+
+.border-hover-amarillo:hover{
+  border-color: var(--main-color-amarillo);
+}
+
+.border-hover-magenta:hover{
+  border-color: var(--main-color-magenta);
+}
+
+.border-hover-morado:hover{
+  border-color: var(--main-color-morado);
+}
+
+.border-hover-cyan:hover{
+  border-color: var(--main-color-cyan);
+}
+
+.texto-cairo-black {
+  font-family: "Cairo Black"!important;
+}
+
+.texto-cairo-bold {
+  font-family: "Cairo Bold"!important;
+}
+
+.texto-cairo-semi-bold {
+  font-family: "Cairo Semi Bold"!important;
+}
+
+.texto-cairo-extra-light {
+  font-family: "Cairo Extra Light"!important;
+}
+
+.texto-cairo-light {
+  font-family: "Cairo Light"!important;
+}
 
 .texto-color-amarillo {
   color: var(--main-color-amarillo);
@@ -32821,10 +32879,43 @@ select {
   color: var(--main-color-cyan);
 }
 
+.texto-hover-magenta:hover {
+  color: var(--main-color-magenta);
+}
+
+.texto-hover-amarillo:hover {
+  color: var(--main-color-amarillo);
+}
+
+.texto-hover-morado:hover {
+  color: var(--main-color-morado);
+}
+
+.texto-hover-cyan:hover {
+  color: var(--main-color-cyan);
+}
+
 @media (min-width: 768px) {
   .md__cyan-desktop {
     background-color: var(--main-color-cyan);
   }
+}
+
+/* LINKS */
+
+.active-item {
+  color: white;
+  background-color: var(--main-color-cyan);
+}
+
+.active-dropdown {
+  color: white;
+  background-color: rgba(156, 163, 175, 1);
+}
+
+.nav-item:hover {
+  color: white;
+  background-color: var(--main-color-cyan);
 }
 
 @media (min-width: 640px) {
