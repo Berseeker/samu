@@ -18,12 +18,10 @@
     background-color: var(--main-color-magenta);
     transition: 0.3s all ease-in;
 }
-
 .bg-morado{
     background-color: var(--main-color-morado);
     transition: 0.3s all ease-in;
 }
-
 .bg-cyan{
     background-color: var(--main-color-cyan);
     transition: 0.3s all ease-in;
