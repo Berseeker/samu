@@ -1,6 +1,6 @@
 <template>
   <div class="bg-cyan imagen-navbar">
-    <div class="flex justify-between px-6 pt-10">
+    <div class="flex justify-between px-6 pt-4">
       <div class="flex text-white">
         <a href="#" class="px-3 text-xl text-white texto-hover-magenta"
           >¿Qué es samu?</a
