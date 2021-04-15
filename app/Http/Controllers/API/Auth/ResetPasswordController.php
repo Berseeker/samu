@@ -103,7 +103,7 @@ class ResetPasswordController extends Controller
                 {
                     $this->status = 'error';
                     $this->message = 'Este usuario no hizo la peticion para resetear la contraseña';
-                    $this->code = 404;
+                    $this->code = 403;
                     $this->data = null;
                 }else
                 {
@@ -116,7 +116,7 @@ class ResetPasswordController extends Controller
             }else{
                 $this->status = 'error';
                 $this->message = 'El token ya expiró';
-                $this->code = 404;
+                $this->code = 405;
                 $this->data = null;
             }
         }

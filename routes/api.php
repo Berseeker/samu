@@ -16,6 +16,7 @@ use App\Http\Controllers\API\Tiendas\TiendaController;
 use App\Http\Controllers\API\Categorias\CategoriaControler;
 use App\Http\Controllers\API\Subcategorias\SubcategoriaController;
 use App\Http\Controllers\API\Subcategorias\HijosController;
+use App\Http\Controllers\API\InputType\InpuTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,7 +86,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::get('direcciones',[DireccionController::class,'index']);
     Route::get('direccion/{id}',[DireccionController::class,'show']);
     Route::post('direccion/{id}',[DireccionController::class,'update']);
-    Route::post('store-direccion',[DireccionController::class,'store']);
+    Route::post('direccion',[DireccionController::class,'store']);
     Route::delete('delete-direccion/{id}',[DireccionController::class,'delete']);
 
     Route::get('tiendas',[TiendaController::class,'index']);
@@ -106,6 +107,12 @@ Route::middleware(['auth:sanctum'])->group(function (){
     
     Route::delete('delete-pais',[PaisController::class,'destroy']);
     Route::get('restore-pais',[PaisController::class,'restore']);
+
+    Route::get('input-types',[InpuTypeController::class, 'index']);
+    Route::get('input-type/{id}',[InpuTypeController::class, 'show']);
+    Route::post('input-type/{id}',[InpuTypeController::class, 'update']);
+    Route::post('input-type',[InpuTypeController::class, 'store']);
+    Route::delete('input-type/{id}',[InpuTypeController::class, 'destroy']);
 
 });
 
