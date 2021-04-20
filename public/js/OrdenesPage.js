@@ -21,6 +21,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -321,8 +335,28 @@ var staticRenderFns = [
       "div",
       { staticClass: "px-10 mt-10 animate__animated animate__fadeInUp" },
       [
-        _c("h1", { staticClass: "text-dark texto-cairo-bold text-5xl" }, [
+        _c("h1", { staticClass: "text-dark texto-cairo-bold text-5xl mb-5" }, [
           _vm._v("Ordenes")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "contenedor-busqueda mt-4 flex gap-2" }, [
+          _c(
+            "select",
+            {
+              staticClass:
+                "bg-transparent border-none texto-cairo-semi-bold text-2xl focus:outline-none",
+              attrs: { name: "filtro", id: "filtro" }
+            },
+            [_c("option", { attrs: { value: "filtrar" } }, [_vm._v("Filtrar")])]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "w-full bg-transparent rounded-full",
+            attrs: {
+              type: "text",
+              placeholder: "Nombre del producto o referencia"
+            }
+          })
         ])
       ]
     )

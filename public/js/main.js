@@ -2950,7 +2950,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container__auth-botones[data-v-23f9fb62] {\n  display: grid;\n  grid-template-columns: 1fr;\n  align-items: center;\n}\n@media (min-width: 768px) {\n.container__auth-botones[data-v-23f9fb62] {\n    grid-template-columns: 40% 60%;\n    align-items: center;\n}\n}\n.hero[data-v-23f9fb62] {\n  position: relative;\n  height: calc(100vh + 40vh);\n  overflow-x: hidden;\n  overflow-y: hidden;\n}\n.hero-img[data-v-23f9fb62] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  background-size: cover;\n  background-repeat: no-repeat;\n  background-position: top center;\n  background-image: url(\"/assets/brand/Bg_1_Movil.jpg\");\n}\n@media (min-width: 768px) {\n.hero[data-v-23f9fb62] {\n    position: relative;\n    height: calc(100vh);\n    overflow-x: hidden;\n    overflow-y: hidden;\n}\n.hero-img[data-v-23f9fb62] {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    /*padding-top: 100px;*/\n    /*margin-bottom: 70px;*/\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: top center;\n    background-image: url(\"/assets/brand/Bg_1.jpg\");\n}\n}\n@media (min-width: 1280px) {\n.hero[data-v-23f9fb62] {\n    position: relative;\n    height: calc(100vh - 132px);\n    overflow-x: hidden;\n    overflow-y: hidden;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container__auth-botones[data-v-23f9fb62] {\r\n  display: grid;\r\n  grid-template-columns: 1fr;\r\n  align-items: center;\n}\n@media (min-width: 768px) {\n.container__auth-botones[data-v-23f9fb62] {\r\n    grid-template-columns: 40% 60%;\r\n    align-items: center;\n}\n}\n.hero[data-v-23f9fb62] {\r\n  position: relative;\r\n  height: calc(100vh + 40vh);\r\n  overflow-x: hidden;\r\n  overflow-y: hidden;\n}\n.hero-img[data-v-23f9fb62] {\r\n  position: absolute;\r\n  left: 0;\r\n  top: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-size: cover;\r\n  background-repeat: no-repeat;\r\n  background-position: top center;\r\n  background-image: url(\"/assets/brand/Bg_1_Movil.jpg\");\n}\n@media (min-width: 768px) {\n.hero[data-v-23f9fb62] {\r\n    position: relative;\r\n    height: calc(100vh);\r\n    overflow-x: hidden;\r\n    overflow-y: hidden;\n}\n.hero-img[data-v-23f9fb62] {\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    /*padding-top: 100px;*/\r\n    /*margin-bottom: 70px;*/\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n    background-position: top center;\r\n    background-image: url(\"/assets/brand/Bg_1.jpg\");\n}\n}\n@media (min-width: 1280px) {\n.hero[data-v-23f9fb62] {\r\n    position: relative;\r\n    height: calc(100vh - 132px);\r\n    overflow-x: hidden;\r\n    overflow-y: hidden;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22371,7 +22371,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "main",
-        { staticClass: "flex-1 overflow-auto bg-gray-300 h-screen" },
+        { staticClass: "flex-1 overflow-auto bg-gray-200 h-screen" },
         [_c("router-view", { key: _vm.$route.path })],
         1
       )

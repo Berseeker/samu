@@ -68,7 +68,7 @@
     </aside> -->
     <aside-component />
     <!-- ! MAIN -->
-    <main class="flex-1 overflow-auto bg-gray-300 h-screen">
+    <main class="flex-1 overflow-auto bg-gray-200 h-screen">
       <router-view :key="$route.path"></router-view>
     </main>
   </div>

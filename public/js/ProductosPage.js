@@ -21,6 +21,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -321,8 +366,94 @@ var staticRenderFns = [
       "div",
       { staticClass: "px-10 mt-10 animate__animated animate__fadeInUp" },
       [
-        _c("h1", { staticClass: "text-dark texto-cairo-bold text-5xl" }, [
+        _c("h1", { staticClass: "text-dark texto-cairo-bold text-5xl mb-5" }, [
           _vm._v("Productos")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-full" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "texto-color-cyan texto-cairo-bold focus:outline-none text-2xl mr-2"
+            },
+            [_vm._v("\n        + Nuevo producto\n      ")]
+          ),
+          _vm._v("\n      .\n      "),
+          _c(
+            "button",
+            {
+              staticClass: "texto-hover-cyan focus:outline-none text-2xl ml-2"
+            },
+            [_vm._v("\n        Importar produtos\n      ")]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "contenedor-busqueda w-ful mt-4 flex gap-2" },
+          [
+            _c(
+              "select",
+              {
+                staticClass:
+                  "bg-transparent border-none texto-cairo-semi-bold text-2xl focus:outline-none",
+                attrs: { name: "filtro", id: "filtro" }
+              },
+              [
+                _c("option", { attrs: { value: "filtrar" } }, [
+                  _vm._v("Filtrar")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "w-full bg-transparent rounded-full",
+              attrs: {
+                type: "text",
+                placeholder: "Nombre del producto o referencia"
+              }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-full" }, [
+          _c("div", { staticClass: "contenedor-producto flex gap-2" }, [
+            _c("div", { staticClass: "producto-contenedor-img max-w-xs" }, [
+              _c("img", {
+                staticClass: "w-full",
+                attrs: {
+                  src: "/assets/img/Foto_Producto.jpg",
+                  alt: "Foto del Producto"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "producto-contenedor-data w-full flex justify-between"
+              },
+              [
+                _c("div", { staticClass: "producto-informacion" }, [
+                  _c("h3", { staticClass: "uppercase texto-cairo-bold" }, [
+                    _vm._v("camiseta essentials")
+                  ]),
+                  _vm._v(" "),
+                  _c("h4", { staticClass: "uppercase texto-cairo-bold" }, [
+                    _vm._v("linear logo")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "producto-precio flex flex-col" }, [
+                  _c("span", [_vm._v("$87.000")]),
+                  _vm._v(" "),
+                  _c("button", [_vm._v("Editar")])
+                ])
+              ]
+            )
+          ])
         ])
       ]
     )
