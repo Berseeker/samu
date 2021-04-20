@@ -171,7 +171,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container__auth-botones[data-v-4e89b9fd] {\r\n  display: grid;\r\n  grid-template-columns: 1fr;\r\n  align-items: center;\n}\n.hero[data-v-4e89b9fd] {\r\n  position: relative;\r\n  height: calc(100vh);\r\n  overflow-x: hidden;\r\n  overflow-y: hidden;\n}\n@media (min-width: 1280px) {\n.hero[data-v-4e89b9fd] {\r\n    position: relative;\r\n    height: calc(100vh - 132px);\r\n    overflow-x: hidden;\r\n    overflow-y: hidden;\n}\n}\r\n\r\n/*\r\n.hero-img {\r\n  position: absolute;\r\n  left: 0;\r\n  top: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-size: cover;\r\n  background-repeat: no-repeat;\r\n  background-position: top center;\r\n  background-image: url(\"/assets/brand/Bg_1_Movil.jpg\");\r\n}\r\n\r\n@media (min-width: 768px) {\r\n  .hero {\r\n    position: relative;\r\n    height: calc(100vh);\r\n    overflow-x: hidden;\r\n    overflow-y: hidden;\r\n  }\r\n\r\n  .hero-img {\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n    background-position: top center;\r\n    background-image: url(\"/assets/brand/Bg_1.jpg\");\r\n  }\r\n}\r\n\r\n@media (min-width: 1280px) {\r\n  .hero {\r\n    position: relative;\r\n    height: calc(100vh - 132px);\r\n    overflow-x: hidden;\r\n    overflow-y: hidden;\r\n  }\r\n} */\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container__auth-botones[data-v-4e89b9fd] {\n    display: grid;\n    grid-template-columns: 1fr;\n    align-items: center;\n}\n.hero[data-v-4e89b9fd] {\n    position: relative;\n    height: calc(100vh);\n    overflow-x: hidden;\n    overflow-y: hidden;\n}\n@media (min-width: 1280px) {\n.hero[data-v-4e89b9fd] {\n        position: relative;\n        height: calc(100vh - 132px);\n        overflow-x: hidden;\n        overflow-y: hidden;\n}\n}\n.hero-img[data-v-4e89b9fd] {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: top center;\n    background-image: url(\"/assets/brand/02_Fondo_mosaico.jpg\");\n}\n@media (min-width: 768px) {\n.hero[data-v-4e89b9fd] {\n        position: relative;\n        height: calc(100vh);\n        overflow-x: hidden;\n        overflow-y: hidden;\n}\n.hero-img[data-v-4e89b9fd] {\n        position: absolute;\n        left: 0;\n        top: 0;\n        width: 100%;\n        height: 100%;\n        background-size: cover;\n        background-repeat: no-repeat;\n        background-position: top center;\n        background-image: url(\"/assets/brand/02_Fondo_mosaico.jpg\");\n}\n}\n@media (min-width: 1280px) {\n.hero[data-v-4e89b9fd] {\n        position: relative;\n        height: calc(100vh - 132px);\n        overflow-x: hidden;\n        overflow-y: hidden;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -312,7 +312,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("AuthLayout", [
-    _c("section", { staticClass: "hero bg-gray-200" }, [
+    _c("section", { staticClass: "hero " }, [
       _c("div", { staticClass: "hero-img" }),
       _vm._v(" "),
       _c(
@@ -332,12 +332,16 @@ var render = function() {
                   staticClass:
                     "uppercase text-black text-5xl my-5 font-extrabold"
                 },
-                [_vm._v("\n          venda online con samu.app\n        ")]
+                [
+                  _vm._v(
+                    "\n                    venda online con samu.app\n                "
+                  )
+                ]
               ),
               _vm._v(" "),
               _c("p", { staticClass: "uppercase text-black text-xl" }, [
                 _vm._v(
-                  "\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad\n          assumenda\n        "
+                  "\n                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad\n                    assumenda\n                "
                 )
               ]),
               _vm._v(" "),
@@ -351,7 +355,11 @@ var render = function() {
                       staticClass:
                         "text-black text-lg font-xl uppercase font-extrabold"
                     },
-                    [_vm._v("\n            Recuperar Contraseña\n          ")]
+                    [
+                      _vm._v(
+                        "\n                        Recuperar Contraseña\n                    "
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _vm.loading
@@ -422,7 +430,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                Recuperar\n              "
+                                    "\n                                Recuperar\n                            "
                                   )
                                 ]
                               )
