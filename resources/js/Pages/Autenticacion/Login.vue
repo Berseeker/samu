@@ -22,7 +22,7 @@
             <div v-if="loading" class="flex mx-auto py-5">
               <spin-component />
             </div>
-            <div v-else>
+            <form v-else @submit="validar">
               <div class="my-4">
                 <input
                   type="email"
@@ -72,12 +72,12 @@
                 </button>
                 <router-link
                   to="/registro"
-                  class="uppercase text-center texto-color-cyan texto-hover-magenta border-0 py-2 px-6  texto-cairo-bold"
+                  class="uppercase text-center texto-color-cyan texto-hover-magenta border-0 py-2 px-6 texto-cairo-bold"
                 >
                   CREAR UNA NUEVA CUENTA
                 </router-link>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
