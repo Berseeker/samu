@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Paises;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Events\ProductoPublicado;
 use App\Models\Pais;
 
 class PaisController extends Controller

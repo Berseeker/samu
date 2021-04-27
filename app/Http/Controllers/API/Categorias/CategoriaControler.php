@@ -34,7 +34,7 @@ class CategoriaControler extends Controller
 
     public function show($id)
     {
-        $categoria = Categoria::findOrFail($id);
+        $categoria = Categoria::with('subcategorias')->findOrFail($id);
 
         return response()->json([
             'status' => 'success',
@@ -124,8 +124,7 @@ class CategoriaControler extends Controller
     public function syncData()
     {
         //dd(public_path('storage').'/taxonomy_google.xlsx');
-        $file = File::first();
-        Excel::import(new CategoriaImport, $file->nombre,'public');
+        Excel::import(new CategoriaImport, 'excel/taxonomi_samu.xls','s3');
 
         return response()->json([
             'status' => 'success',
@@ -146,7 +145,7 @@ class CategoriaControler extends Controller
         ];
         $this->validate($request,$rules,$messages);
 
-        $path = Storage::disk('public')->put('excel', $request->file('excel'),'public');
+        $path = Storage::disk('s3')->put('excel', $request->file('excel'));
         DB::table('excel')->insert([
             'nombre' => $path
         ]);

@@ -25,13 +25,13 @@ class UserSeeder extends Seeder
             'updated_at' => now()
         ]);
 
-        DB::table('teams')->insert([
+        /*DB::table('teams')->insert([
             'user_id' => 1,
             'name' => "JuanPi's Team",
             'personal_team' => true,
             'created_at' => now(),
             'updated_at' => now()
-        ]);
+        ]);*/
 
     }
 }

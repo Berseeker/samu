@@ -8,17 +8,19 @@ use App\Imports\ChildImport;
 use App\Imports\SubcategoriaImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 use App\Models\File;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
+use App\Models\Subcate_hijos;
 use App\Models\Producto;
 
 class SubcategoriaController extends Controller
 {
     public function index()
     {
-        $subcategorias = Subcategoria::with('categoria')->where('child',null)->get();
+        $subcategorias = Subcategoria::all();
         $message = 'Se encontraron '.count($subcategorias).' subcategorias registradas';
         $data = null;
         if(!$subcategorias->isEmpty())    
@@ -34,31 +36,12 @@ class SubcategoriaController extends Controller
 
     public function show($id)
     {
-        $subcategoria = Subcategoria::with('categoria')->findOrFail($id);
+        $subcategoria = Subcategoria::with('hijos')->findOrFail($id);
 
         return response()->json([
             'status' => 'success',
             'message' => 'Mostrando la subcategoria solicitada',
             'data' => $subcategoria,
-            'code' => 200
-        ],200);
-    }
-
-    public function showChild($id)
-    {
-        $subcategoria = Subcategoria::with('categoria')->findOrFail($id);
-
-        $hijos = Subcategoria::where('child',$subcategoria->id)->get();
-
-        $data = [
-            'subcategoria' => $subcategoria,
-            'hijos' => $hijos
-        ];
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Mostrando las ramas de la subcategoria solicitada',
-            'data' => $data,
             'code' => 200
         ],200);
     }
@@ -126,10 +109,10 @@ class SubcategoriaController extends Controller
     public function delete($id)
     {
         $subcategoria = Subcategoria::findOrFail($id);
-        $productos = Producto::where('subcategoria_id',$subcategoria->id)->get();
+        $hijos = Subcate_hijos::where('subcategoria_id',$subcategoria->id)->get();
 
         $data = null;
-        $message = 'No se puede borrar la subcategoria porque todavia hay productos que dependen de ella';
+        $message = 'No se puede borrar la subcategoria porque todavia hay subcategorias (hijos) que dependen de ella';
         $status = 'error';
         $code = 406;
         if($productos->isEmpty())
@@ -150,10 +133,8 @@ class SubcategoriaController extends Controller
     
     public function syncData()
     {
-        //dd(public_path('storage').'/taxonomy_google.xlsx');
-        $file = File::first();
-        dd($file);
-        Excel::import(new SubcategoriaImport, $file->nombre,'public');
+        Excel::import(new SubcategoriaImport, 'excel/taxonomi_samu.xls','s3');
+        Cache::flush();
 
         return response()->json([
             'status' => 'success',
@@ -165,9 +146,8 @@ class SubcategoriaController extends Controller
 
     public function syncChild()
     {
-        //dd(public_path('storage').'/stuff_google.xlsx');
-        $file = File::first();
-        Excel::import(new ChildImport, $file->nombre,'public');
+        Excel::import(new ChildImport, 'excel/taxonomi_samu.xls','s3');
+        Cache::flush();
 
         return response()->json([
             'status' => 'success',

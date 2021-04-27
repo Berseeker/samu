@@ -11,6 +11,7 @@ use App\Models\Tienda;
 use App\Models\Categoria;
 use App\Models\Direccion;
 use App\Models\Divisa;
+use App\Models\Pais;
 
 class TiendaController extends Controller
 {
@@ -36,6 +37,16 @@ class TiendaController extends Controller
     public function show($id)
     {
         $tienda = Tienda::with(['proveedor:id,name,email,telefono','direccion.pais','categoria'])->findOrFail($id);
+        $tienda->logo = Storage::temporaryUrl(
+                $tienda->logo,
+                now()->addMinutes(5)
+            );
+        $tienda->caratula = Storage::temporaryUrl(
+                $tienda->caratula,
+                now()->addMinutes(5)
+            );
+        //$tienda->logo = Storage::url($tienda->logo);
+        //$tienda->caratula = Storage::url($tienda->caratula);
 
         return response()->json([
             'status' => 'success',
@@ -84,10 +95,7 @@ class TiendaController extends Controller
 
         if($tienda_prev->isEmpty())
         {
-            /*$name = Auth::user()->id.'_'.Auth::user()->name;
-            $path = Storage::disk('tienda')->put($name, $request->file('logo'));*/
-
-            
+   
             $tienda = new Tienda();
             $tienda->nombre = $request->nombre;
             $tienda->descripcion = $request->descripcion;
@@ -181,30 +189,34 @@ class TiendaController extends Controller
 
             if($tienda->logo != null)
             {
-                if (Storage::disk('tienda')->exists($tienda->logo)) {
+                if (Storage::disk('s3')->exists($tienda->logo)) {
 
-                    Storage::disk('tienda')->delete($tienda->logo);
+                    Storage::disk('s3')->delete($tienda->logo);
 
                     $name = Auth::user()->id.'_'.Auth::user()->name;
-                    $path = Storage::disk('tienda')->put($name, $request->file('logo'),'public');
+                    $path = Storage::disk('s3')->put("tiendas/".$name, $request->file('logo'));
+                    //$path = $request->file('logo')->storePublicly('tiendas/'.$name, 's3');
                 }
             }else{
                 $name = Auth::user()->id.'_'.Auth::user()->name;
-                $path = Storage::disk('tienda')->put($name, $request->file('logo'),'public');
+                $path = Storage::disk('s3')->put("tiendas/".$name, $request->file('logo'));
+                //$path = $request->file('logo')->storePublicly('tiendas/'.$name, 's3');
             }
 
             if($tienda->caratula != null)
             {
-                if (Storage::disk('tienda')->exists($tienda->caratula)) {
+                if (Storage::disk('s3')->exists($tienda->caratula)) {
 
-                    Storage::disk('tienda')->delete($tienda->caratula);
+                    Storage::disk('s3')->delete($tienda->caratula);
 
                     $name = Auth::user()->id.'_'.Auth::user()->name;
-                    $path = Storage::disk('tienda')->put($name, $request->file('caratula'));
+                    $path_caratula = Storage::disk('s3')->put('caratulas/'.$name, $request->file('caratula'));
+                    //$path_caratula = $request->file('caratula')->storePublicly('caratulas/'.$name, 's3');
                 }
             }else{
                 $name = Auth::user()->id.'_'.Auth::user()->name;
-                $path_caratula = Storage::disk('tienda')->put($name, $request->file('caratula'));
+                $path_caratula = Storage::disk('s3')->put('caratulas/'.$name, $request->file('caratula'));
+                //$path_caratula = $request->file('caratula')->storePublicly('caratulas/'.$name, 's3');
             }
             
 

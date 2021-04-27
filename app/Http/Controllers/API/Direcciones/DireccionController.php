@@ -158,6 +158,7 @@ class DireccionController extends Controller
         $direccion->referencias = ($request->has('referencias')) ? $request->referencias : NULL;
         $direccion->user_id = Auth::user()->id;
         $direccion->tienda_id = NULL;
+        $direccion->cp = $request->cp;
         $direccion->pais_id = $pais->id;
         $direccion->save();
 

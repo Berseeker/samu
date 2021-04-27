@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 
+
 class LoginController extends Controller
 {
     public function index(Request $request)
@@ -62,7 +63,9 @@ class LoginController extends Controller
     public function logout()
     {
         // Revoke the token that was used to authenticate the current request...
-        Auth::user()->currentAccessToken()->delete();
+        //Auth::user()->currentAccessToken()->delete();
+        Auth::user()->tokens()->delete();
+        
         return response()->json([
             'status' => 'success',
             'message' => 'Cierre de sesion exitoso',
