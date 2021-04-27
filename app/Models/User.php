@@ -12,6 +12,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Direccion;
+use App\Models\Rol;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -42,6 +43,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'created_at',
+        'updated_at',
+        'email_verified_at',
+        'current_team_id',
+        'profile_photo_path',
+        'deleted_at',
+        'profile_photo_url',
     ];
 
     /**
@@ -61,5 +69,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class);
+    }
 
 }

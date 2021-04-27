@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 
-class LoginController extends Controller
+class LoginController extends ApiController
 {
     public function index(Request $request)
     {
@@ -33,30 +33,23 @@ class LoginController extends Controller
         {
             if(Hash::check($request->password,$user[0]->password)){
                 //crear TOKEN para autenticacion de la SPA
-                $token = $user[0]->createToken('login');
+                if($user[0]->rol->tag == "admin")
+                {
+                    $token = $user[0]->createToken('login',['can:all']);
+                }else if($user[0]->rol->tag == "proveedor")
+                {
+                    $token = $user[0]->createToken('login',['can:all-slave']);
+                }else if($user[0]->rol->tag == "cliente")
+                {
+                    $token = $user[0]->createToken('login',['can:slave']);
+                }
+                return $this->loginResponse('Inicio de sesion exitoso',$user[0],$token->plainTextToken,200);
 
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Inicio de sesion exitoso',
-                    'token' => $token->plainTextToken,
-                    'data' => $user,
-                    'code' => 200
-                ],200);
             }else{
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Password/Email incorrectos',
-                    'data' => null,
-                    'code' => 500
-                ],500);
+                return $this->errorResponse('Password/Email incorrectos',500);
             }
         }else{
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Password/Email incorrectos',
-                'data' => null,
-                'code' => 500
-            ],500);
+            return $this->errorResponse('Password/Email incorrectos',500);
         }
     }
 
@@ -65,12 +58,6 @@ class LoginController extends Controller
         // Revoke the token that was used to authenticate the current request...
         //Auth::user()->currentAccessToken()->delete();
         Auth::user()->tokens()->delete();
-        
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Cierre de sesion exitoso',
-            'data' => null,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Cierre de sesion exitoso',null,200);
     }
 }

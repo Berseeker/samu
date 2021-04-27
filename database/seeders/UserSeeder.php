@@ -20,18 +20,30 @@ class UserSeeder extends Seeder
             'email' => 'juan.alucard.02@gmail.com',
             'telefono' => 9983208924,
             'password' => Hash::make('Harimakenji01@'),
-            'rol_id' => 1,
+            'rol_id' => 5,
             'created_at' => now(),
             'updated_at' => now()
         ]);
 
-        /*DB::table('teams')->insert([
-            'user_id' => 1,
-            'name' => "JuanPi's Team",
-            'personal_team' => true,
+        DB::table('users')->insert([
+            'name' => 'Pedro',
+            'email' => 'juan_alucard@hotmail.com',
+            'telefono' => 9983208924,
+            'password' => Hash::make('Harimakenji01@'),
+            'rol_id' => 3,
             'created_at' => now(),
             'updated_at' => now()
-        ]);*/
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Sofia',
+            'email' => 'one_piece_i@hotmail.com',
+            'telefono' => 9983208924,
+            'password' => Hash::make('Harimakenji01@'),
+            'rol_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
 
     }
 }

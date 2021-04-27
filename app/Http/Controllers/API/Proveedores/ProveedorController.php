@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Proveedores;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use App\Models\Rol;
 use Mail;
 
-class ProveedorController extends Controller
+class ProveedorController extends ApiController
 {
     public function index()
     {
@@ -23,25 +23,13 @@ class ProveedorController extends Controller
         if($proveedores->isEmpty())
             $data = null;
         
-
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
-
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
     {
         $proveedor = Proveedor::with('direcciones')->findOrFail($id);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se encontro el proveedor solicitado',
-            'data' => $proveedor,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se encontro el proveedor solicitado',$proveedor,200);
     }
 
     public function update(Request $request,$id)
@@ -50,7 +38,6 @@ class ProveedorController extends Controller
             'nombre' => 'required',
             'email' => 'required|email',
         ];
-
         $messages = [
             'nombre.required' => 'Es necesario asignar un nombre al usuario',
             'email.required' => 'Por favor escribe un correo electronico',
@@ -61,7 +48,6 @@ class ProveedorController extends Controller
 
         $message = "";
         
-
         $user = Proveedor::findOrFail($id);
         $user->name = $request->nombre;
         $user->email = $request->email;
@@ -74,16 +60,9 @@ class ProveedorController extends Controller
         }
         
         $user->save();
-
         verifyEmail($user->email_verified_at,$user->id,$user->email);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'El proveedor se actualizo de manera correcta '.$message,
-            'data' => $user,
-            'code' => 200
-        ],200);
-
+        return $this->successResponse('El proveedor se actualizo de manera correcta '.$message,$user,200);
     }
 
     public function destroy($id)
@@ -91,13 +70,7 @@ class ProveedorController extends Controller
         $proveedor = Proveedor::findOrFail($id);
         $proveedor->tokens()->delete();
         $proveedor->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se eliminó el proovedor de manera correcta',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se eliminó el proovedor de manera correcta',null,200);
     }
 
     public function restore($id)
@@ -105,13 +78,7 @@ class ProveedorController extends Controller
         Proveedor::withTrashed()
             ->where('id', $id)
             ->restore();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se restauró el proveedor de manera correcta',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se restauró el proveedor de manera correcta',null,200);
     }
 }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Subcategorias;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Imports\ChildImport;
 use App\Imports\SubcategoriaImport;
@@ -16,7 +16,7 @@ use App\Models\Subcategoria;
 use App\Models\Subcate_hijos;
 use App\Models\Producto;
 
-class SubcategoriaController extends Controller
+class SubcategoriaController extends ApiController
 {
     public function index()
     {
@@ -26,24 +26,13 @@ class SubcategoriaController extends Controller
         if(!$subcategorias->isEmpty())    
             $data = $subcategorias;
         
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
     {
         $subcategoria = Subcategoria::with('hijos')->findOrFail($id);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Mostrando la subcategoria solicitada',
-            'data' => $subcategoria,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Mostrando la subcategoria solicitada',$subcategoria,200);
     }
 
     public function store(Request $request)
@@ -52,7 +41,6 @@ class SubcategoriaController extends Controller
             'nombre' => 'required',
             'categoria_id' => 'required'
         ];
-
         $messages = [
             'nombre.required' => 'Por favor asigna un nombre a la categoria que se creará',
             'categoria_id' => 'Por favor asigna una categoria'
@@ -67,13 +55,7 @@ class SubcategoriaController extends Controller
         $subcategoria->categoria_id = $categoria->id;
         $subcategoria->tag = Str::slug(Str::of($request->nombre)->lower());
         $subcategoria->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La subcategoria se creo exitosamente',
-            'data' => $subcategoria,
-            'code' => 200
-        ],200); 
+        return $this->successResponse('La subcategoria se creo exitosamente',$subcategoria,200);
     }
 
     public function update(Request $request,$id)
@@ -82,7 +64,6 @@ class SubcategoriaController extends Controller
             'nombre' => 'required',
             'categoria_id' => 'required'
         ];
-
         $messages = [
             'nombre.required' => 'Por favor asigna un nombre a la categoria que se creará',
             'categoria_id' => 'Por favor asigna una categoria'
@@ -97,13 +78,7 @@ class SubcategoriaController extends Controller
         $subcategoria->categoria_id = $categoria->id;
         $subcategoria->tag = Str::slug(Str::of($request->nombre)->lower());
         $subcategoria->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La subcategoria se actualizó exitosamente',
-            'data' => $subcategoria,
-            'code' => 200
-        ],200); 
+        return $this->successResponse('La subcategoria se actualizó exitosamente',$subcategoria,200); 
     }
 
     public function delete($id)
@@ -111,49 +86,27 @@ class SubcategoriaController extends Controller
         $subcategoria = Subcategoria::findOrFail($id);
         $hijos = Subcate_hijos::where('subcategoria_id',$subcategoria->id)->get();
 
-        $data = null;
         $message = 'No se puede borrar la subcategoria porque todavia hay subcategorias (hijos) que dependen de ella';
-        $status = 'error';
-        $code = 406;
-        if($productos->isEmpty())
+        if($hijos->isEmpty())
         {
             $subcategoria->delete();
-            $message = 'La subcategoria se elimino correctamente';
-            $code = 200;
-            $status = 'success';
+            return $this->successResponse('La subcategoria se elimino correctamente',null,200);
         }
-
-        return response()->json([
-            'status' => $status,
-            'message' => $message,
-            'data' => $data,
-            'code' => $code
-        ],$code);
+            
+        return $this->errorResponse($message,406);
     }
     
     public function syncData()
     {
         Excel::import(new SubcategoriaImport, 'excel/taxonomi_samu.xls','s3');
         Cache::flush();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se importaron las categorias del Excel a la BD',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se importaron las categorias del Excel a la BD',null,200);
     }
 
     public function syncChild()
     {
         Excel::import(new ChildImport, 'excel/taxonomi_samu.xls','s3');
         Cache::flush();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se importaron las categorias del Excel a la BD',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se importaron las categorias del Excel a la BD',null,200);
     }
 }

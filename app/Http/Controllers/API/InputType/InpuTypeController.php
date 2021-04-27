@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API\InputType;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\AtributosDinamicos;
 use App\Models\InputType;
 
-class InpuTypeController extends Controller
+class InpuTypeController extends ApiController
 {
     public function index()
     {
@@ -17,24 +17,14 @@ class InpuTypeController extends Controller
         $message = 'Se encontraron '.count($inputs).' inputsTypes en la BD';
         if(!$inputs->isEmpty())
             $data = $inputs;
-               
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
+        
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
     {
         $input = InputType::findOrFail($id);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se encontró el input solicitado',
-            'data' => $input,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se encontró el input solicitado',$input,200);
     }
 
     public function store(Request $request)
@@ -42,7 +32,6 @@ class InpuTypeController extends Controller
         $rules = [
             'nombre' => 'required'
         ];
-
         $messages = [
             'nombre.required' => 'Es necesario asignar un nombre al tipo de input'
         ];
@@ -53,13 +42,7 @@ class InpuTypeController extends Controller
         $input->nombre = Str::ucfirst(Str::of($request->nombre)->lower());
         $input->tag = Str::of($request->nombre)->lower();
         $input->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'El input se creo exitosamente',
-            'data' => $input,
-            'code' => 201
-        ],201);
+        return $this->successResponse('El input se creo exitosamente',$input,201);
     }
 
     public function update(Request $request,$id)
@@ -79,12 +62,7 @@ class InpuTypeController extends Controller
         $input->tag = Str::of($request->nombre)->lower();
         $input->save();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'El input se actualizó exitosamente',
-            'data' => $input,
-            'code' => 201
-        ],201);
+        return $this->successResponse('El input se actualizó exitosamente',$input,201);
     }
 
     public function destroy($id)
@@ -95,11 +73,6 @@ class InpuTypeController extends Controller
         dd($atributos);
         $input->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'El input se eliminó exitosamente',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('El input se eliminó exitosamente',null,200);
     }
 }

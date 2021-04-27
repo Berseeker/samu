@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Divisas;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use App\Models\Divisa;
 use App\Models\Pais;
 
-class DivisaController extends Controller
+class DivisaController extends ApiController
 {
     public function index()
     {
@@ -19,24 +19,14 @@ class DivisaController extends Controller
         $message = 'Se encontraron '.count($divisas).' divisas en la BD';
         if(!$divisas->isEmpty())
             $data = $divisas;
-               
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
+        
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
     {
         $divisa = Divisa::findOrFail($id);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se encontró la divisa solicitada',
-            'data' => $divisa,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se encontró la divisa solicitada',$divisa,200);
     }
 
     public function store(Request $request)
@@ -45,7 +35,6 @@ class DivisaController extends Controller
             'moneda' => 'required|min:2',
             'valor' => 'required|numeric'
         ];
-
         $messages = [
             'moneda.required' => 'Ingresa el tipo de moneda a utilizar Eje: USD',
             'moneda.min' => 'El tipo de moneda debe tener al menos 2 caracteres',
@@ -56,26 +45,15 @@ class DivisaController extends Controller
         $this->validate($request,$rules,$messages);
 
         $prev = Divisa::where('moneda',$request->moneda)->first();
-        if($prev != NULL){
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Esta divisa ya se encuentra registrada',
-                'data' => NULL,
-                'code' => 202
-            ],202);
-        }
+        if($prev != NULL)
+            return $this->errorResponse('Esta divisa ya se encuentra registrada',400);
+        
             
         $divisa = new Divisa();
         $divisa->moneda = Str::upper($request->moneda);
         $divisa->valor = $request->valor;
         $divisa->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La divisa se creo exitosamente',
-            'data' => $divisa,
-            'code' => 201
-        ],201);
+        return $this->successResponse('La divisa se creo exitosamente',$divisa,201);
     }
 
     public function update(Request $request,$id)
@@ -84,7 +62,6 @@ class DivisaController extends Controller
             'moneda' => 'required|min:2',
             'valor' => 'required|numeric'
         ];
-
         $messages = [
             'moneda.required' => 'Ingresa el tipo de moneda a utilizar Eje: USD',
             'moneda.min' => 'El tipo de moneda debe tener al menos 2 caracteres',
@@ -98,26 +75,14 @@ class DivisaController extends Controller
         $divisa->moneda = $request->moneda;
         $divisa->valor = $request->valor;
         $divisa->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La divisa se actualizó exitosamente',
-            'data' => $divisa,
-            'code' => 200
-        ],200);
+        return $this->successResponse('La divisa se actualizó exitosamente',$divisa,200);
     }
 
     public function destroy($id)
     {
         $divisa = Divisa::findOrFail($id);
         $divisa->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La divisa se eliminó exitosamente',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('La divisa se eliminó exitosamente',null,200);
     }
 
     public function restore($id)
@@ -125,13 +90,7 @@ class DivisaController extends Controller
         Divisa::withTrashed()
             ->where('id', $id)
             ->restore();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'La divisa se restauró correctamente',
-                'data' => null,
-                'code' => 200
-            ],200);
+        return $this->successResponse('La divisa se restauró correctamente',null,200);
     }
 
     public function import()
@@ -163,13 +122,7 @@ class DivisaController extends Controller
                 $pointer++;
             } 
         }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se crearon '.$count.' divisas y se actualizaron '.$pointer.' divisas',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se crearon '.$count.' divisas y se actualizaron '.$pointer.' divisas',null,200);
     }
 
 }
