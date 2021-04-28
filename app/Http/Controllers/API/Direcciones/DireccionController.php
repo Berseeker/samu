@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\API\Direcciones;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Models\Direccion;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pais;
 
-class DireccionController extends Controller
+class DireccionController extends ApiController
 {
     public function index()
     {
@@ -18,14 +18,8 @@ class DireccionController extends Controller
         $message = 'Se encontró '.count($direcciones).' direccion(es)';
         if($direcciones->isEmpty())
             $data = null;
-        
 
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
@@ -34,22 +28,11 @@ class DireccionController extends Controller
             ['id' , '=', $id],
             ['user_id', '=', Auth::user()->id]
         ])->get();
-        if($direccion->isEmpty())
-        {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No existe la direccion solicitada',
-                'data' => NULL,
-                'code' => 404
-            ],404);
-        }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Mostrando la direccion solicitada',
-            'data' => $direccion,
-            'code' => 200
-        ],200);
+        if($direccion->isEmpty())
+            return $this->errorResponse('No existe la direccion solicitada',404);
+
+        return $this->successResponse('Mostrando la direccion solicitada',$direccion,200);
     }
 
     public function store(Request $request)
@@ -64,7 +47,6 @@ class DireccionController extends Controller
             'no_ext' => 'required',
             'pais_id' => 'required'
         ];
-
         $messages = [
             'persona_x_recibe.required' => 'Favor de asignar la persona que recibira el pedido',
             'persona_x_recibe.min' => 'El nombre de la persona debe tener al menos 3 caracteres',
@@ -102,13 +84,7 @@ class DireccionController extends Controller
         $direccion->pais_id = $pais->id;
         $direccion->save();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La dirección se creo exitosamente',
-            'data' => $direccion,
-            'code' => 200
-        ],200);
-
+        return $this->successResponse('La dirección se creo exitosamente',$direccion,200);
     }
 
     public function update(Request $request, $id)
@@ -123,7 +99,6 @@ class DireccionController extends Controller
             'no_ext' => 'required',
             'pais_id' => 'required'
         ];
-
         $messages = [
             'persona_x_recibe.required' => 'Favor de asignar la persona que recibira el pedido',
             'persona_x_recibe.min' => 'El nombre de la persona debe tener al menos 3 caracteres',
@@ -158,39 +133,22 @@ class DireccionController extends Controller
         $direccion->referencias = ($request->has('referencias')) ? $request->referencias : NULL;
         $direccion->user_id = Auth::user()->id;
         $direccion->tienda_id = NULL;
+        $direccion->cp = $request->cp;
         $direccion->pais_id = $pais->id;
         $direccion->save();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La dirección se actualizó exitosamente',
-            'data' => $direccion,
-            'code' => 200
-        ],200);
-
+        return $this->successResponse('La dirección se actualizó exitosamente',$direccion,200);
     }
 
     public function delete($id)
     {
         $direccion = Direccion::where('user_id',Auth::user()->id)->where('id',$id)->get();
         if($direccion->isEmpty())
-        {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'La dirección no existe/ La direccion no pertenece al usuario que intenta eliminarla',
-                'data' => NULL,
-                'code' => 500
-            ],500);
-        }
+            return $this->errorResponse('La dirección no existe/ La direccion no pertenece al usuario que intenta eliminarla',500);
+
 
         $direccion[0]->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La dirección se eliminó correctamente',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('La dirección se eliminó correctamente',null,200);
     }
 
 }

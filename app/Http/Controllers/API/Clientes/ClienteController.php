@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Clientes;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +12,7 @@ use App\Models\Cliente;
 use Carbon\Carbon;
 use Mail;
 
-class ClienteController extends Controller
+class ClienteController extends ApiController
 {
     public function index()
     {
@@ -21,26 +21,14 @@ class ClienteController extends Controller
         $message = 'Se encontraron '.count($clientes).' clientes en la BD';
         if($clientes->isEmpty())
             $data = null;
-        
 
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
-
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
     {
         $cliente = Cliente::with('direcciones')->findOrFail($id);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se encontro el cliente solicitado',
-            'data' => $cliente,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se encontro el cliente solicitado',$cliente,200);
     }
 
     public function update(Request $request,$id)
@@ -49,7 +37,6 @@ class ClienteController extends Controller
             'nombre' => 'required',
             'email' => 'required|email',
         ];
-
         $messages = [
             'nombre.required' => 'Es necesario asignar un nombre al usuario',
             'email.required' => 'Por favor escribe un correo electronico',
@@ -59,7 +46,7 @@ class ClienteController extends Controller
         $this->validate($request,$rules,$messages);
 
         $message = "";
-        
+
 
         $user = Cliente::findOrFail($id);
         $user->name = $request->nombre;
@@ -71,18 +58,11 @@ class ClienteController extends Controller
             $user->email_verified_at = NULL;
             $message = 'Hemos mandado un correo de verificacion al nuevo correo que nos proporcionaste';
         }
-        
+
         $user->save();
 
         verifyEmail($user->email_verified_at,$user->id,$user->email);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'El cliente se actualizo de manera correcta '.$message,
-            'data' => $user,
-            'code' => 200
-        ],200);
-
+        return $this->successResponse('El cliente se actualizo de manera correcta '.$message,$user,201);
     }
 
     public function destroy($id)
@@ -90,13 +70,7 @@ class ClienteController extends Controller
         $cliente = Cliente::findOrFail($id);
         $cliente->tokens()->delete();
         $cliente->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se eliminó el cliente de manera correcta',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se eliminó el cliente de manera correcta',null,200);
     }
 
     public function restore($id)
@@ -104,13 +78,7 @@ class ClienteController extends Controller
         Cliente::withTrashed()
             ->where('id', $id)
             ->restore();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se restauró el cliente de manera correcta',
-            'data' => NULL,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se restauró el cliente de manera correcta',null,200);
     }
 }
 

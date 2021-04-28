@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API\Paises;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Events\ProductoPublicado;
 use App\Models\Pais;
 
-class PaisController extends Controller
+class PaisController extends ApiController
 {
     public function index()
     {
@@ -19,36 +19,20 @@ class PaisController extends Controller
             $data = $paises;
             $message = 'Se encontraron '.count($paises).' paises en la BD';
         }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
     {
         $pais = Pais::findOrFail($id);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Mostrando el pais solicitado',
-            'data' => $pais,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Mostrando el pais solicitado',$pais,200);
     }
 
     public function delete($id)
     {
         $pais = Pais::findOrFail($id);
         $pais->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'El pais se eliminó correctamente',
-            'data' => null,
-            'code' => 200
-        ],200);
+        return $this->successResponse('El pais se eliminó correctamente',null,200);
     }
 
     public function restore($id)
@@ -56,13 +40,7 @@ class PaisController extends Controller
         Pais::withTrashed()
             ->where('id', $id)
             ->restore();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'El pais se restauró correctamente',
-                'data' => null,
-                'code' => 200
-            ],200);
+        return $this->successResponse('El pais se restauró correctamente',null,200);
     }
 
     public function syncData()
@@ -74,9 +52,9 @@ class PaisController extends Controller
         $pointer = 0;
 
         foreach($response as $row){
-            
+
             $check = Pais::where('nombre',$row['name'])->get();
-            
+
             if($check->isEmpty())
             {
                 //dd(json_encode($row['latlng']));
@@ -108,12 +86,6 @@ class PaisController extends Controller
                     $count++;
             }
         }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se agregaron '.$pointer.' y se actualizaron '.$count.' paises a la BD',
-            'data' => null,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Se agregaron '.$pointer.' y se actualizaron '.$count.' paises a la BD',null,200);
     }
 }

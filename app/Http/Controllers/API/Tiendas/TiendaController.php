@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Tiendas;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +13,7 @@ use App\Models\Direccion;
 use App\Models\Divisa;
 use App\Models\Pais;
 
-class TiendaController extends Controller
+class TiendaController extends ApiController
 {
     public function index()
     {
@@ -24,14 +24,8 @@ class TiendaController extends Controller
 
         if(!$tiendas->isEmpty())
             $data = $tiendas;
-        
 
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
@@ -39,21 +33,14 @@ class TiendaController extends Controller
         $tienda = Tienda::with(['proveedor:id,name,email,telefono','direccion.pais','categoria'])->findOrFail($id);
         $tienda->logo = Storage::temporaryUrl(
                 $tienda->logo,
-                now()->addMinutes(5)
+                now()->addMinutes(15)
             );
         $tienda->caratula = Storage::temporaryUrl(
                 $tienda->caratula,
-                now()->addMinutes(5)
+                now()->addMinutes(15)
             );
-        //$tienda->logo = Storage::url($tienda->logo);
-        //$tienda->caratula = Storage::url($tienda->caratula);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Mostrando la tienda solicitada',
-            'data' => $tienda,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Mostrando la tienda solicitada',$tienda,200);
     }
 
     public function store(Request $request)
@@ -67,7 +54,6 @@ class TiendaController extends Controller
             'estado' => 'required',
             'divisa_id' => 'required'
         ];
-
         $messages = [
             'nombre.required' => 'Es necesario asignar un nombre a la tienda',
             'categoria_id.required' => 'Es necesario asignar una categoria a la que pertenece la tienda',
@@ -88,20 +74,14 @@ class TiendaController extends Controller
         $divisa = Divisa::findOrFail($request->divisa_id);
         $pais = Pais::findOrFail($request->pais_id);
 
-        $data = null;
-        $message = 'El usuario ya cuenta con una tienda';
-        $status = 'error';
-        $code = 406;
-
         if($tienda_prev->isEmpty())
         {
-   
+
             $tienda = new Tienda();
             $tienda->nombre = $request->nombre;
             $tienda->descripcion = $request->descripcion;
             $tienda->categoria_id = $categoria->id;
             $tienda->divisa_id = $divisa->id;
-            //$tienda->logo = $path;
             $tienda->user_id = Auth::user()->id;
             $tienda->save();
 
@@ -119,19 +99,11 @@ class TiendaController extends Controller
             $direccion->pais_id = $pais->id;
             $direccion->save();
 
-            $message =  "La tienda se creó correctamente";
-            $data = $tienda;
-            $status = 'success';
-            $code = 201;
-            
+            return $this->successResponse("La tienda se creó correctamente",$tienda,201);
+
         }
 
-        return response()->json([
-            'status' => $status,
-            'message' => $message,
-            'data' => $data,
-            'code' => $code
-        ],$code);
+        return $this->errorResponse('El usuario ya cuenta con una tienda',406);
     }
 
     public function update(Request $request,$id)
@@ -145,7 +117,6 @@ class TiendaController extends Controller
             'estado' => 'required',
             'divisa_id' => 'required'
         ];
-
         $messages = [
             'nombre.required' => 'Es necesario asignar un nombre a la tienda',
             'categoria_id.required' => 'Es necesario asignar una categoria a la que pertenece la tienda',
@@ -167,90 +138,62 @@ class TiendaController extends Controller
 
         $direccion = Direccion::where('tienda_id',$tienda->id)->get();
 
-        $data = null;
-        $message = '';
-        $status = 'error';
-        $code = 406;
-
         if($tienda->user_id != Auth::user()->id)
-        {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'El usuario no cuenta con permisos para acceder a esta tienda',
-                'data' => null,
-                'code' => 403
-            ],403);
-        }
-        if($tienda != null && !$direccion->isEmpty())
-        {
-            $name = null;
-            $path = null;
-            $path_caratula = null;
+            return $this->errorResponse('El usuario no cuenta con permisos para acceder a esta tienda',403);
 
-            if($tienda->logo != null)
+
+        $name = null;
+        $path = null;
+        $path_caratula = null;
+
+        if($tienda->logo != null)
+        {
+            if (Storage::disk('s3')->exists($tienda->logo))
             {
-                if (Storage::disk('s3')->exists($tienda->logo)) {
-
-                    Storage::disk('s3')->delete($tienda->logo);
-
-                    $name = Auth::user()->id.'_'.Auth::user()->name;
-                    $path = Storage::disk('s3')->put("tiendas/".$name, $request->file('logo'));
-                    //$path = $request->file('logo')->storePublicly('tiendas/'.$name, 's3');
-                }
-            }else{
+                Storage::disk('s3')->delete($tienda->logo);
                 $name = Auth::user()->id.'_'.Auth::user()->name;
                 $path = Storage::disk('s3')->put("tiendas/".$name, $request->file('logo'));
-                //$path = $request->file('logo')->storePublicly('tiendas/'.$name, 's3');
             }
-
-            if($tienda->caratula != null)
-            {
-                if (Storage::disk('s3')->exists($tienda->caratula)) {
-
-                    Storage::disk('s3')->delete($tienda->caratula);
-
-                    $name = Auth::user()->id.'_'.Auth::user()->name;
-                    $path_caratula = Storage::disk('s3')->put('caratulas/'.$name, $request->file('caratula'));
-                    //$path_caratula = $request->file('caratula')->storePublicly('caratulas/'.$name, 's3');
-                }
-            }else{
-                $name = Auth::user()->id.'_'.Auth::user()->name;
-                $path_caratula = Storage::disk('s3')->put('caratulas/'.$name, $request->file('caratula'));
-                //$path_caratula = $request->file('caratula')->storePublicly('caratulas/'.$name, 's3');
-            }
-            
-
-            $tienda->nombre = $request->nombre;
-            $tienda->descripcion = $request->descripcion;
-            $tienda->categoria_id = $categoria->id;
-            $tienda->divisa_id = $divisa->id;
-            $tienda->logo = $path;
-            $tienda->caratula = $path_caratula;
-            $tienda->save();
-
-            $direccion[0]->celular = $request->celular;
-            $direccion[0]->ciudad = $request->ciudad;
-            $direccion[0]->estado = $request->estado;
-            $direccion[0]->colonia_delegacion = $request->colonia_delegacion;
-            $direccion[0]->calle = $request->calle;
-            $direccion[0]->no_ext = $request->no_ext;
-            $direccion[0]->referencias = $request->referencias;
-            $direccion[0]->tienda_id = $tienda->id;
-            $direccion[0]->pais_id = $request->pais_id;
-            $direccion[0]->save();
-
-            $message =  "La tienda se actualizó correctamente";
-            $data = $tienda;
-            $status = 'success';
-            $code = 200;
+        }else{
+            $name = Auth::user()->id.'_'.Auth::user()->name;
+            $path = Storage::disk('s3')->put("tiendas/".$name, $request->file('logo'));
         }
 
-        return response()->json([
-            'status' => $status,
-            'message' => $message,
-            'data' => $data,
-            'code' => $code
-        ],$code);
+        if($tienda->caratula != null)
+        {
+            if (Storage::disk('s3')->exists($tienda->caratula))
+            {
+                Storage::disk('s3')->delete($tienda->caratula);
+                $name = Auth::user()->id.'_'.Auth::user()->name;
+                $path_caratula = Storage::disk('s3')->put('caratulas/'.$name, $request->file('caratula'));
+            }
+        }else{
+            $name = Auth::user()->id.'_'.Auth::user()->name;
+            $path_caratula = Storage::disk('s3')->put('caratulas/'.$name, $request->file('caratula'));
+        }
+
+
+        $tienda->nombre = $request->nombre;
+        $tienda->descripcion = $request->descripcion;
+        $tienda->categoria_id = $categoria->id;
+        $tienda->divisa_id = $divisa->id;
+        $tienda->logo = $path;
+        $tienda->caratula = $path_caratula;
+        $tienda->save();
+
+        $direccion[0]->celular = $request->celular;
+        $direccion[0]->ciudad = $request->ciudad;
+        $direccion[0]->estado = $request->estado;
+        $direccion[0]->colonia_delegacion = $request->colonia_delegacion;
+        $direccion[0]->calle = $request->calle;
+        $direccion[0]->no_ext = $request->no_ext;
+        $direccion[0]->referencias = $request->referencias;
+        $direccion[0]->tienda_id = $tienda->id;
+        $direccion[0]->pais_id = $request->pais_id;
+        $direccion[0]->save();
+
+        return $this->successResponse("La tienda se actualizó correctamente",$tienda,201);
+
     }
 
 }

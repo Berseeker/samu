@@ -2,41 +2,30 @@
 
 namespace App\Http\Controllers\API\Subcategorias;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 use App\Models\Subcate_hijos;
 use App\Models\Subcategoria;
 
-class HijosController extends Controller
+class HijosController extends ApiController
 {
     public function index()
     {
         $subcategorias = Subcate_hijos::all();
         $message = 'Se encontraron '.count($subcategorias).' subcategorias (hijas) registradas';
         $data = null;
-        if(!$subcategorias->isEmpty())    
+        if(!$subcategorias->isEmpty())
             $data = $subcategorias;
-        
-        return response()->json([
-            'status' => 'success',
-            'message' => $message,
-            'data' => $data,
-            'code' => 200
-        ],200);
+
+        return $this->successResponse($message,$data,200);
     }
 
     public function show($id)
     {
         $subcategoria = Subcate_hijos::with('subcategoria')->findOrFail($id);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Mostrando la subcategoria (hija) solicitada',
-            'data' => $subcategoria,
-            'code' => 200
-        ],200);
+        return $this->successResponse('Mostrando la subcategoria (hija) solicitada',$subcategoria,200);
     }
 
     public function store(Request $request)
@@ -60,13 +49,7 @@ class HijosController extends Controller
         $hijo->subcategoria_id = $subcategoria->id;
         $hijo->tag = Str::slug(Str::of($request->nombre)->lower());
         $hijo->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La subcategoria (hijo) se creo exitosamente',
-            'data' => $hijo,
-            'code' => 200
-        ],200); 
+        return $this->successResponse('La subcategoria (hijo) se creo exitosamente',$hijo,200);
     }
 
     public function update(Request $request,$id)
@@ -75,7 +58,6 @@ class HijosController extends Controller
             'nombre' => 'required',
             'subcategoria_id' => 'required'
         ];
-
         $messages = [
             'nombre.required' => 'Por favor asigna un nombre a la categoria que se creará',
             'subcategoria_id' => 'Por favor asigna una subcategoria'
@@ -91,12 +73,7 @@ class HijosController extends Controller
         $hijo->tag = Str::slug(Str::of($request->nombre)->lower());
         $hijo->save();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'La subcategoria se actualizó exitosamente',
-            'data' => $hijo,
-            'code' => 200
-        ],200); 
+        return $this->successResponse('La subcategoria se actualizó exitosamente',$hijo,200);
     }
 
     public function delete($id)
@@ -109,18 +86,8 @@ class HijosController extends Controller
         $status = 'error';
         $code = 406;
         if($productos->isEmpty())
-        {
-            $hijo->delete();
-            $message = 'La subcategoria se elimino correctamente';
-            $code = 200;
-            $status = 'success';
-        }
+            return $this->successResponse('La subcategoria se elimino correctamente',null,200);
 
-        return response()->json([
-            'status' => $status,
-            'message' => $message,
-            'data' => $data,
-            'code' => $code
-        ],$code);
+        return $this->errorResponse($message,$code);
     }
 }

@@ -20,7 +20,10 @@ class Proveedor extends Model
         'created_at',
         'rol_id',
         'email_verified_at',
-        'current_team_id'
+        'current_team_id',
+        'updated_at',
+        'stripe_id',
+        'profile_photo_path'
     ];
 
     public static function boot()

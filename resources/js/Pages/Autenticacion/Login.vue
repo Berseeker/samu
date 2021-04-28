@@ -109,11 +109,34 @@ export default {
       },
     };
   },
+  created() {
+    this.listenForChanges();
+  },
   computed: {
     ...mapState(["url"]),
   },
   methods: {
     ...mapMutations(["SET_USUARIO", "SET_TOKEN", "SET_AUTH"]),
+    listenForChanges() {
+      Echo.channel("users").listen("ProductoPublicado", (post) => {
+        if (!("Notification" in window)) {
+          alert("Web Notification is not supported");
+          return;
+        }
+
+        Notification.requestPermission((permission) => {
+          let notification = new Notification("New post alert!", {
+            body: post.title, // content for the alert
+            icon: "https://pusher.com/static_logos/320x320.png", // optional image url
+          });
+
+          // link to page on clicking the notification
+          notification.onclick = () => {
+            window.open(window.location.href);
+          };
+        });
+      });
+    },
     login() {
       this.loading = true;
       axios

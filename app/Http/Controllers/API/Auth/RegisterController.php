@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +22,7 @@ use App\Models\Divisa;
 use Mail;
 
 
-class RegisterController extends Controller
+class RegisterController extends ApiController
 {
     public function store(Request $request)
     {
@@ -47,9 +47,6 @@ class RegisterController extends Controller
 
         $this->validate($request,$rules,$messages);
 
-        //queda pendiente de investigar
-        //dd(url()->previous());
-
         if($request->rol == 'proveedor')
             $categoria = Categoria::findOrFail($request->categoria_id);
 
@@ -57,19 +54,11 @@ class RegisterController extends Controller
         $user->name = $request->nombre;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->telefono = $request->telefono;
-        $user->foto_perfil = $request->foto_perfil;
+        $user->telefono = 00000000;
+        $user->foto_perfil = null;
         $user->rol_id = ($request->rol == 'proveedor') ? 1 : 3;
         $user->save();
 
-        /*$team = new Team();
-        $team->user_id = $user->id;
-        $team->name = explode(' ', $user->name, 2)[0]."'s Team";
-        $team->personal_team = true;
-        $team->save();
-        
-        $user->current_team_id = $team->id;
-        $user->save();*/
 
         $divisa = Divisa::findOrFail($request->divisa_id);
 
@@ -79,21 +68,10 @@ class RegisterController extends Controller
             $tienda->nombre = $request->tienda_nombre;
             $tienda->descripcion = $request->tienda_descripcion; // opcional
             $tienda->user_id = $user->id;
-            $tienda->categoria_id = $categoria->id; 
+            $tienda->categoria_id = $categoria->id;
             $tienda->divisa_id = $divisa->id;
             $tienda->save();
 
-            $direccion = new Direccion();
-            $direccion->celular = $request->celular;
-            $direccion->ciudad = $request->ciudad;
-            $direccion->estado = $request->estado;
-            $direccion->colonia_delegacion = $request->colonia_delegacion;
-            $direccion->calle = $request->calle;
-            $direccion->no_ext = $request->no_ext;
-            $direccion->cp = $request->cp;
-            $direccion->tienda_id = $tienda->id;
-            $direccion->pais_id = $request->pais_id;
-            $direccion->save();
         }
         if($request->rol == 'cliente')
         {
@@ -116,12 +94,7 @@ class RegisterController extends Controller
         if($request->rol == 'proveedor')
             event(new TiendaRegisterEvent($tienda));
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'El usuario se registro exitosamente',
-            'data' => $user,
-            'code' => 200
-        ],200);
+        return $this->successResponse('El usuario se registro exitosamente',$user,200);
     }
 }
 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\VerifyEmailController;
+use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Clientes\ClienteController;
 use App\Http\Controllers\API\Proveedores\ProveedorController;
 use App\Http\Controllers\API\Divisas\DivisaController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\API\Tiendas\TiendaController;
 use App\Http\Controllers\API\Categorias\CategoriaControler;
 use App\Http\Controllers\API\Subcategorias\SubcategoriaController;
 use App\Http\Controllers\API\Subcategorias\HijosController;
+use App\Http\Controllers\API\InputType\InpuTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,15 +31,9 @@ use App\Http\Controllers\API\Subcategorias\HijosController;
 
 Route::post('create-user',[RegisterController::class,'store']);
 Route::post('login',[LoginController::class,'index']);
+Route::post('request-new-password',[ResetPasswordController::class,'index']);
+Route::post('reset-password',[ResetPasswordController::class,'restore']);
 Route::middleware('auth:sanctum')->get('verify-email',[VerifyEmailController::class,'index']);
-
-//ENDPOINTS PARA LLENAR LA BD YA SEA DE UN API O ARCHIVOS DE EXCEL -- SIEMPRE EJECUTARLOS AL HACER GIT CLONE 
-Route::get('sync-paises-data',[PaisController::class,'syncData']);
-Route::get('import-categorias',[CategoriaControler::class,'syncData']);
-Route::get('import-subcategorias',[SubcategoriaController::class,'syncData']);
-Route::get('import-child',[SubcategoriaController::class,'syncChild']);
-Route::get('sync-divisa',[DivisaController::class,'import']);
-//Route::post('export-excel',[CategoriaControler::class,'storeFile']);
 
 Route::get('categorias',[CategoriaControler::class,'index']);
 Route::get('categoria/{id}',[CategoriaControler::class,'show']);
@@ -53,56 +49,83 @@ Route::get('pais/{id}',[PaisController::class,'show']);
 Route::get('divisas',[DivisaController::class,'index']);
 Route::get('divisa/{id}',[DivisaController::class,'show']);
 
+//ENDPOINTS PARA LLENAR LA BD YA SEA DE UN API O ARCHIVOS DE EXCEL -- SIEMPRE EJECUTARLOS AL HACER GIT CLONE
+Route::get('sync-paises-data',[PaisController::class,'syncData']);
+Route::get('import-categorias',[CategoriaControler::class,'syncData']);
+Route::get('import-subcategorias',[SubcategoriaController::class,'syncData']);
+Route::get('import-child',[SubcategoriaController::class,'syncChild']);
+Route::get('sync-divisa',[DivisaController::class,'import']);
+
 
 //verified.email
 Route::middleware(['auth:sanctum'])->group(function (){
 
+    Route::middleware(['isAdmin'])->group(function()
+    {
+        // RUTAS PARA EL ROL DE ADMIN
+
+        Route::get('proveedores',[ProveedorController::class,'index']);
+        Route::get('restore-proveedor/{id}',[ProveedorController::class,'restore']);
+
+        Route::get('clientes',[ClienteController::class,'index']);
+        Route::get('restore-cliente/{id}',[ClienteController::class,'restore']);
+
+        Route::post('divisa/{id}',[DivisaController::class,'update']);
+        Route::post('store-divisa',[DivisaController::class,'store']);
+        Route::delete('delete-divisa/{id}',[DivisaController::class,'destroy']);
+        Route::get('restore-divisa/{id}',[DivisaController::class,'restore']);
+
+        Route::get('tiendas',[TiendaController::class,'index']);
+
+        Route::post('categoria/{id}',[CategoriaControler::class,'update']);
+        Route::post('categoria',[CategoriaControler::class,'store']);
+        Route::delete('categoria/{id}',[CategoriaControler::class,'delete']);
+
+        Route::post('subcategoria/{id}',[SubcategoriaController::class,'update']);
+        Route::post('subcategoria',[SubcategoriaController::class,'store']);
+        Route::delete('subcategoria/{id}',[SubcategoriaController::class,'delete']);
+
+        Route::delete('delete-pais',[PaisController::class,'destroy']);
+        Route::get('restore-pais',[PaisController::class,'restore']);
+
+        Route::get('input-types',[InpuTypeController::class, 'index']);
+        Route::get('input-type/{id}',[InpuTypeController::class, 'show']);
+        Route::post('input-type/{id}',[InpuTypeController::class, 'update']);
+        Route::post('input-type',[InpuTypeController::class, 'store']);
+        Route::delete('input-type/{id}',[InpuTypeController::class, 'destroy']);
+    });
+
+    Route::middleware(['isProveedor'])->group(function()
+    {
+        // RUTAS PARA EL ROL DE ADMIN && PROVEEDOR
+
+        Route::get('proveedor/{id}',[ProveedorController::class,'show']);
+        Route::post('proveedor/{id}',[ProveedorController::class,'update']);
+        Route::delete('delete-proveedor/{id}',[ProveedorController::class,'destroy']);
+
+        Route::get('tienda/{id}',[TiendaController::class,'show']);
+        Route::post('tienda/{id}',[TiendaController::class,'update']);
+        Route::post('tienda',[TiendaController::class,'store']);
+    });
+
+    Route::middleware(['isCliente'])->group(function()
+    {
+        // RUTAS PARA EL ROL DE ADMIN && CLIENTE
+
+        Route::get('cliente/{id}',[ClienteController::class,'show']);
+        Route::post('cliente/{id}',[ClienteController::class,'update']);
+        Route::delete('delete-cliente/{id}',[ClienteController::class,'destroy']);
+    });
+
+
     Route::post('logout',[LoginController::class,'logout']);
-
-    Route::get('proveedores',[ProveedorController::class,'index']);
-    Route::get('proveedor/{id}',[ProveedorController::class,'show']);
-    Route::post('proveedor/{id}',[ProveedorController::class,'update']);
-    Route::delete('delete-proveedor/{id}',[ProveedorController::class,'destroy']);
-    Route::get('restore-proveedor/{id}',[ProveedorController::class,'restore']);
-
-    Route::get('clientes',[ClienteController::class,'index']);
-    Route::get('cliente/{id}',[ClienteController::class,'show']);
-    Route::post('cliente/{id}',[ClienteController::class,'update']);
-    Route::delete('delete-cliente/{id}',[ClienteController::class,'destroy']);
-    Route::get('restore-cliente/{id}',[ClienteController::class,'restore']);
-
-    
-    Route::post('divisa/{id}',[DivisaController::class,'update']);
-    Route::post('store-divisa',[DivisaController::class,'store']);
-    Route::delete('delete-divisa/{id}',[DivisaController::class,'destroy']);
-    Route::get('restore-divisa/{id}',[DivisaController::class,'restore']);
-
 
     //RUTAS DE DIRECCIONES PARA CLIENTES FINALES
     Route::get('direcciones',[DireccionController::class,'index']);
     Route::get('direccion/{id}',[DireccionController::class,'show']);
     Route::post('direccion/{id}',[DireccionController::class,'update']);
-    Route::post('store-direccion',[DireccionController::class,'store']);
+    Route::post('direccion',[DireccionController::class,'store']);
     Route::delete('delete-direccion/{id}',[DireccionController::class,'delete']);
-
-    Route::get('tiendas',[TiendaController::class,'index']);
-    Route::get('tienda/{id}',[TiendaController::class,'show']);
-    Route::post('tienda/{id}',[TiendaController::class,'update']);
-    Route::post('tienda',[TiendaController::class,'store']);
-
-    
-    Route::post('categoria/{id}',[CategoriaControler::class,'update']);
-    Route::post('categoria',[CategoriaControler::class,'store']);
-    Route::delete('categoria/{id}',[CategoriaControler::class,'delete']);
-    
-
-    Route::post('subcategoria/{id}',[SubcategoriaController::class,'update']);
-    Route::post('subcategoria',[SubcategoriaController::class,'store']);
-    Route::delete('subcategoria/{id}',[SubcategoriaController::class,'delete']);
-
-    
-    Route::delete('delete-pais',[PaisController::class,'destroy']);
-    Route::get('restore-pais',[PaisController::class,'restore']);
 
 });
 

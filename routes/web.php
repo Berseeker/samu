@@ -35,6 +35,13 @@ use App\Http\Controllers\WEB\Auth\VerifyEmailController;
 Route::get('{any?}', [AuthController::class, 'indexView'])->where('any', '.*');
 //Route::get('/registro', [AuthController::class,'registro'])->name('registro');
 //Route::get('/panel', [PanelController::class,'index'])->name('panel.index');
+Route::get('login', [AuthController::class,'login'])->name('login');
+Route::get('/registro', [AuthController::class,'registro'])->name('registro');
+
+Route::get('/pusher',function(){
+
+    return 'tienda stored';
+});
 
 
 

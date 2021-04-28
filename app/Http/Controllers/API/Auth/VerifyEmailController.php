@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use Mail;
 
-class VerifyEmailController extends Controller
+class VerifyEmailController extends ApiController
 {
     public function index()
     {
@@ -31,12 +31,7 @@ class VerifyEmailController extends Controller
             Mail::to($user->email)
                 ->queue(new VerifyEmail($url));
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'El correo se envio de manera correcta, favor de verficar su email.',
-                'data' => null,
-                'code' => 200
-            ],200);
+            return $this->successResponse('El correo se envio de manera correcta, favor de verficar su email.',null,200);
         }
     }
 }
