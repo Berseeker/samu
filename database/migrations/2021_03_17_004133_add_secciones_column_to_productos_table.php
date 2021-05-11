@@ -27,7 +27,7 @@ class AddSeccionesColumnToProductosTable extends Migration
     public function down()
     {
         Schema::table('productos', function (Blueprint $table) {
-            //
+            $table->dropForeign('seccion_id');
         });
     }
 }

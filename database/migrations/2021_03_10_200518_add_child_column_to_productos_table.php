@@ -15,7 +15,7 @@ class AddChildColumnToProductosTable extends Migration
     {
         Schema::table('productos', function (Blueprint $table) {
             $table->unsignedBigInteger('subcategoria_id');
-            $table->foreign('subcategoria_id')->references('id')->on('subcategoria_hijos');
+            $table->foreign('subcategoria_id')->references('id')->on('subcategorias');
         });
     }
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\API\Categorias\CategoriaControler;
 use App\Http\Controllers\API\Subcategorias\SubcategoriaController;
 use App\Http\Controllers\API\Subcategorias\HijosController;
 use App\Http\Controllers\API\InputType\InpuTypeController;
+use App\Http\Controllers\API\Productos\ProductoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,9 +104,16 @@ Route::middleware(['auth:sanctum'])->group(function (){
         Route::post('proveedor/{id}',[ProveedorController::class,'update']);
         Route::delete('delete-proveedor/{id}',[ProveedorController::class,'destroy']);
 
+        Route::get('tienda',[TiendaController::class,'showTienda']);
         Route::get('tienda/{id}',[TiendaController::class,'show']);
         Route::post('tienda/{id}',[TiendaController::class,'update']);
         Route::post('tienda',[TiendaController::class,'store']);
+
+        Route::get('productos',[ProductoController::class,'index']);
+        Route::get('producto/{id}',[ProductoController::class,'show']);
+        Route::post('producto/{id}',[ProductoController::class,'update']);
+        Route::post('producto',[ProductoController::class,'store']);
+        Route::delete('producto/{id}',[ProductoController::class,'de']);
     });
 
     Route::middleware(['isCliente'])->group(function()

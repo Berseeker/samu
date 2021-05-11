@@ -24,8 +24,6 @@ class CreateProductosTable extends Migration
             $table->string('peso_producto')->nullable();
             $table->unsignedBigInteger('tienda_id');
             $table->foreign('tienda_id')->references('id')->on('tiendas');
-            $table->unsignedBigInteger('atributo_id');
-            $table->foreign('atributo_id')->references('id')->on('atributos_x_producto');
             $table->timestamps();
             $table->softDeletes();
         });

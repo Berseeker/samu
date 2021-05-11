@@ -23,7 +23,9 @@ class Proveedor extends Model
         'current_team_id',
         'updated_at',
         'stripe_id',
-        'profile_photo_path'
+        'profile_photo_path',
+        'password',
+        'verified_at'
     ];
 
     public static function boot()
@@ -38,5 +40,10 @@ class Proveedor extends Model
     public function direcciones()
     {
         return $this->hasMany(Direccion::class,'user_id');
+    }
+
+    public function store()
+    {
+        return $this->hasOne(Tienda::class,'user_id');
     }
 }

@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        //Admin
         DB::table('users')->insert([
             'name' => 'JuanPi',
             'email' => 'juan.alucard.02@gmail.com',
@@ -24,7 +25,7 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-
+        //Cliente
         DB::table('users')->insert([
             'name' => 'Pedro',
             'email' => 'juan_alucard@hotmail.com',
@@ -34,7 +35,7 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-
+        //Proveedor
         DB::table('users')->insert([
             'name' => 'Sofia',
             'email' => 'one_piece_i@hotmail.com',

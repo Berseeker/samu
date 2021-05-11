@@ -17,6 +17,21 @@ class Producto extends Model
 
     public function subcategoria()
     {
-        return $this->belongsTo(Subcate_hijos::class,'subcategoria_id','id');
+        return $this->belongsTo(Subcategoria::class,'subcategoria_id','id');
+    }
+
+    public function seccion()
+    {
+        return $this->belongsTo(Seccion::class,'seccion_id','id');
+    }
+
+    public function tienda()
+    {
+        return $this->belongsTo(Tienda::class);
+    }
+
+    public function atributos()
+    {
+        return $this->hasMany(AtributosDinamicos::class,'producto_id','id');
     }
 }

@@ -196,4 +196,13 @@ class TiendaController extends ApiController
         
     }
 
+    public function showTienda()
+    {
+        $tienda = Tienda::where('user_id',Auth::user()->id)->first();
+        if($tienda == NULL)
+            return $this->errorResponse('No tienes una tienda registrada',404);
+        
+        return $this->successResponse('Ok',$tienda,200);
+    }
+
 }
