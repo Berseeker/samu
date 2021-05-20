@@ -17,6 +17,7 @@ class CreateVariablesXAtributosTable extends Migration
             $table->id();
             $table->string('valor');
             $table->boolean('default_value')->default(FALSE);
+            $table->string('plus_minus',2)->nullable();
             $table->double('cargo_extra')->nullable();
             $table->string('modificador_precio')->nullable();
             $table->unsignedBigInteger('atributo_id');

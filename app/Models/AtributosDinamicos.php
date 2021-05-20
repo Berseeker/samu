@@ -10,4 +10,8 @@ class AtributosDinamicos extends Model
     use HasFactory;
 
     protected $table = "atributos_x_producto";
+
+    protected $fillable = [
+        'nombre', 'inputType_id', 'producto_id'
+    ];
 }

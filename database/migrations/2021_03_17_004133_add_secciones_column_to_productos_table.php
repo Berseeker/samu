@@ -14,7 +14,7 @@ class AddSeccionesColumnToProductosTable extends Migration
     public function up()
     {
         Schema::table('productos', function (Blueprint $table) {
-            $table->unsignedBigInteger('seccion_id');
+            $table->unsignedBigInteger('seccion_id')->nullable();
             $table->foreign('seccion_id')->references('id')->on('secciones');
         });
     }

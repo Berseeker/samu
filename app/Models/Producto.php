@@ -9,6 +9,11 @@ class Producto extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'SKU', 'nombre', 'descripcion', 'stock', 'precio_unitario',
+        'material', 'peso_producto', 'tienda_id', 'subcategoria_id', 'seccion_id'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',
