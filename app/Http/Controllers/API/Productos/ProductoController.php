@@ -21,15 +21,12 @@ class ProductoController extends ApiController
 
     public function index()
     {
-        $productos = Producto::factory()->has(Seccion::factory())->count(100)->create();
-        dd($productos);
-
         $proveedor = Proveedor::findOrFail(Auth::user()->id);
         $productos = Producto::where('tienda_id',$proveedor->store->id)->paginate();
         if($productos->isEmpty())
             return $this->successResponse('No hay productos registrados en la tienda',NULL,200);
 
-        return $this->successResponse('Mostrando '.count($prodcutos).' productos',$productos,200);
+        return $this->successResponse('Mostrando '.count($productos).' productos',$productos,200);
     }
 
     public function store(Request $request)
@@ -76,6 +73,7 @@ class ProductoController extends ApiController
         $child = Subcate_hijos::findOrFail($request->seccion_id);
         $tienda = Tienda::where('user_id',Auth::user()->id)->first();
         $holder_seccion = NULL;
+        $holder_producto = NULL;
 
         DB::transaction(function() use ($request,$tienda,$child,$holder_seccion)
         {
@@ -104,6 +102,7 @@ class ProductoController extends ApiController
                 'subcategoria_id' => $child->subcategoria->id,
                 'seccion_id' => ($holder_seccion == NULL) ? NULL : $holder_seccion->id
             ]);
+            $holder_producto = $producto;
             
             $array_atributos = array();
             for($i = 0;$i < count($request->nombres_atributos); $i++)
@@ -129,6 +128,7 @@ class ProductoController extends ApiController
                             'valor' => $request->valorAtributo[$i][$j],
                             'default_value' => $request->defaultValue[$i][$j],
                             'cargo_extra' => $request->cargoExtra[$i][$j],
+                            'plus_minus' => $request->minusPlus[$i][$j],
                             'modificador_precio' => $request->modPrecio[$i][$j],
                             'atributo_id' => $array_atributos[$i]->id
                         ]
@@ -138,6 +138,6 @@ class ProductoController extends ApiController
 
         }); 
         
-        return $this->successResponse('El producto se guardo exitosamente',$producto,200);
+        return $this->successResponse('El producto se guardo exitosamente',$holder_producto,200);
     }
 }
