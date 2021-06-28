@@ -31,14 +31,9 @@ class TiendaController extends ApiController
     public function show($id)
     {
         $tienda = Tienda::with(['proveedor:id,name,email,telefono','direccion.pais','categoria'])->findOrFail($id);
-        $tienda->logo = Storage::temporaryUrl(
-                $tienda->logo,
-                now()->addMinutes(15)
-            );
-        $tienda->caratula = Storage::temporaryUrl(
-                $tienda->caratula,
-                now()->addMinutes(15)
-            );
+         
+        $tienda->logo = Storage::disk('s3')->url($tienda->logo); 
+        $tienda->caratula = Storage::disk('s3')->url($tienda->caratula); 
 
         return $this->successResponse('Mostrando la tienda solicitada',$tienda,200);
     }
@@ -142,7 +137,7 @@ class TiendaController extends ApiController
             return $this->errorResponse('El usuario no cuenta con permisos para acceder a esta tienda',403);
         
 
-        $name = null;
+        $name = Auth::user()->id.'_'.Auth::user()->name;
         $path = null;
         $path_caratula = null;
 
@@ -151,12 +146,10 @@ class TiendaController extends ApiController
             if (Storage::disk('s3')->exists($tienda->logo))
             {
                 Storage::disk('s3')->delete($tienda->logo);
-                $name = Auth::user()->id.'_'.Auth::user()->name;
-                $path = Storage::disk('s3')->put("tiendas/".$name, $request->file('logo'));
+                $path = Storage::disk('s3')->put("usuarios/".$name."/tienda/logo", $request->file('logo'));
             }
         }else{
-            $name = Auth::user()->id.'_'.Auth::user()->name;
-            $path = Storage::disk('s3')->put("tiendas/".$name, $request->file('logo'));
+            $path = Storage::disk('s3')->put("usuarios/".$name."/tienda/logo", $request->file('logo'));
         }
 
         if($tienda->caratula != null)
@@ -164,12 +157,10 @@ class TiendaController extends ApiController
             if (Storage::disk('s3')->exists($tienda->caratula)) 
             {
                 Storage::disk('s3')->delete($tienda->caratula);
-                $name = Auth::user()->id.'_'.Auth::user()->name;
-                $path_caratula = Storage::disk('s3')->put('caratulas/'.$name, $request->file('caratula'));
+                $path_caratula = Storage::disk('s3')->put('usuarios/'.$name.'/tienda/caratula', $request->file('caratula'));
             }
         }else{
-            $name = Auth::user()->id.'_'.Auth::user()->name;
-            $path_caratula = Storage::disk('s3')->put('caratulas/'.$name, $request->file('caratula'));
+            $path_caratula = Storage::disk('s3')->put('usuarios/'.$name.'/tienda/caratula', $request->file('caratula'));
         }
             
 

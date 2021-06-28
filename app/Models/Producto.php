@@ -11,7 +11,7 @@ class Producto extends Model
 
     protected $fillable = [
         'SKU', 'nombre', 'descripcion', 'stock', 'precio_unitario',
-        'material', 'peso_producto', 'tienda_id', 'subcategoria_id', 'seccion_id'
+        'material', 'peso_producto', 'tienda_id', 'subcategoria_id', 'seccion_id','tag','galeria'
     ];
 
     protected $hidden = [

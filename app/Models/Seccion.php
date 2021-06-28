@@ -10,4 +10,8 @@ class Seccion extends Model
     use HasFactory;
     
     protected $table = "secciones";
+
+    protected $fillable = [
+        'nombre','tag_seccion','subcategoria_hijo_id'
+    ];
 }

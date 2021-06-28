@@ -5,9 +5,10 @@ namespace App\Http\Controllers\API\Productos;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-
 use App\Models\AtributosDinamicos;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Subcate_hijos;
 use App\Models\Proveedor;
 use App\Models\InputType;
@@ -72,36 +73,56 @@ class ProductoController extends ApiController
 
         $child = Subcate_hijos::findOrFail($request->seccion_id);
         $tienda = Tienda::where('user_id',Auth::user()->id)->first();
-        $holder_seccion = NULL;
+        //$holder_seccion = NULL;
         $holder_producto = NULL;
 
-        DB::transaction(function() use ($request,$tienda,$child,$holder_seccion)
+        /* Se mandan todos los atrobutos a la transaccion*/
+        $tag = Str::slug($request->nombre,'-');
+        $name = Auth::user()->id.'_'.Auth::user()->name;
+        $galeria = array();
+        foreach($request->galeria as $img){
+            $path = $img->storePublicly('usuarios/'.$name.'/tienda/productos/'.$tag,'s3');
+            array_push($galeria,$path);
+        }
+
+        $material = ($request->filled('material')) ? $request->material : NULL;
+        $peso = ($request->filled('peso_producto')) ? $request->peso_producto : NULL;
+        $desc = ($request->filled('descripcion')) ? $request->descripcion : NULL;
+        $sec_name = Str::title($request->seccion_name);
+        $sec_tag = Str::title($request->seccion_name);
+
+        DB::transaction(function() use ($request,$tienda,$child,$galeria,$material,$tag,$peso,$desc,$sec_name,$sec_tag)
         {
+            $holder_seccion = NULL;
             /* ---  Se crea la subcategoria custom en caso de que el cliente escriba una   ---*/
             if($request->filled('seccion_name')) 
             {
                 $seccion = Seccion::create(
                     [
-                        'nombre' => Str::title($request->seccion_name),
-                        'tag' => Str::title($request->seccion_name),
+                        'nombre' => $sec_name,
+                        'tag_seccion' =>$sec_tag,
                         'subcategoria_hijo_id' => $child->id
                     ]
                 );
-                $holder_seccion = $seccion;
+                $holder_seccion = $seccion->id;
             }
+            
 
             $producto = Producto::create([
                 'SKU' => $request->SKU,
                 'nombre' => $request->nombre,
-                'descripcion' => ($request->filled('descripcion')) ? $request->descripcion : NULL,
+                'descripcion' => $desc,
                 'stock' => $request->stock,
                 'precio_unitario' => $request->precio_unitario,
-                'material' => ($request->filled('material')) ? $request->material : NULL,
-                'peso_producto' => ($request->filled('peso_producto')) ? $request->peso_producto : NULL,
+                'material' => $material,
+                'peso_producto' => $peso,
                 'tienda_id' => $tienda->id,
+                'tag' => $tag,
                 'subcategoria_id' => $child->subcategoria->id,
-                'seccion_id' => ($holder_seccion == NULL) ? NULL : $holder_seccion->id
+                'seccion_id' => $holder_seccion,
+                'galeria' => json_encode($galeria)
             ]);
+ 
             $holder_producto = $producto;
             
             $array_atributos = array();
@@ -137,6 +158,7 @@ class ProductoController extends ApiController
             }
 
         }); 
+
         
         return $this->successResponse('El producto se guardo exitosamente',$holder_producto,200);
     }

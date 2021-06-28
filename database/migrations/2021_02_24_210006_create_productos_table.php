@@ -22,8 +22,10 @@ class CreateProductosTable extends Migration
             $table->double('precio_unitario');
             $table->string('material')->nullable();
             $table->string('peso_producto')->nullable();
+            $table->longText('galeria');
             $table->unsignedBigInteger('tienda_id');
             $table->foreign('tienda_id')->references('id')->on('tiendas');
+            $table->string('tag');
             $table->timestamps();
             $table->softDeletes();
         });
