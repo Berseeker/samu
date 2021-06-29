@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait ApiResponser{
 
-    protected function loginResponse($message = null, $data, $token, $code = 200)
+    protected function loginResponse($message, $data, $token, $code = 200)
 	{
 		return response()->json([
 			'status'=> 'Success', 
@@ -15,7 +15,7 @@ trait ApiResponser{
 		], $code);
 	}
 
-    protected function successResponse($message = null, $data, $code = 200)
+    protected function successResponse($message = NULL, $data, $code = 200)
 	{
 		return response()->json([
 			'status'=> 'Success', 

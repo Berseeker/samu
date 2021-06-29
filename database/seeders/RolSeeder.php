@@ -35,6 +35,7 @@ class RolSeeder extends Seeder
             'updated_at' => now()
         ]);
 
+        
         DB::table('roles')->insert([
             'nombre' => 'Monitor',
             'tag' => 'monitor',
